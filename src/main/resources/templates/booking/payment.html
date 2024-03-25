@@ -108,7 +108,7 @@
             this.value = this.value.replace(/[^a-zA-Z\s]/g, ''); // Allow only letters and spaces
         });
         document.getElementById('cardNumber').addEventListener('input', function(e) {
-            this.value = this.value.replace(/\D/g, '').slice(0, 16); // Allow only numbers, limit to 16 digits
+            this.value = this.value.replace(/\D/g, ''); // Allow only numbers, limit to 16 digits
         });
         document.getElementById('cvc').addEventListener('input', function(e) {
             this.value = this.value.replace(/\D/g, '').slice(0, 3); // Allow only numbers, limit to 3 digits

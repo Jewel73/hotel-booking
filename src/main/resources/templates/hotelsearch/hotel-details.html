@@ -14,9 +14,6 @@
                 <p class="mb-2" th:text="${hotel.addressDTO.addressLine}">Address Line</p>
                 <p th:text="${hotel.addressDTO.city + ', ' + hotel.addressDTO.country}">City, Country</p>
             </div>
-            <div class="col-md-6 d-flex">
-                <div id="map" class="border bg-light flex-grow-1" style="min-height: 300px;"></div>
-            </div>
         </div>
         <hr>
         <div class="row mb-3">
@@ -89,15 +86,6 @@
 </th:block>
 <th:block layout:fragment="additional-scripts">
     <th:block th:insert="~{fragment/leaflet :: leaflet-js}"></th:block>
-    <script th:src="@{/js/hotel-map.js}"></script>
-    <!-- Initialize the hotel map with hotel address -->
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        document.addEventListener("DOMContentLoaded", function () {
-            initializeHotelMap([[${hotel.addressDTO.addressLine + ', ' + hotel.addressDTO.city + ', ' + hotel.addressDTO.country}]]);
-        });
-        /*]]>*/
-    </script>
     <script>
         $(document).ready(function () {
             const roomSelect = $(".room-select");
