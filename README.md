@@ -15,4 +15,4 @@ Welcome to our hotel booking application! This application allows users to searc
 - **Backend**: Spring Boot
 - **Frontend**: Thymeleaf, HTML, CSS, JavaScript
 - **Security**: Spring Security for authentication and authorization
-- **Database**: [Database Name], e.g., MySQL, PostgreSQL
+- **Database**: MySQL, PostgreSQL
