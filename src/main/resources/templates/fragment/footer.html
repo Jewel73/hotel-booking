@@ -1,13 +1,122 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Fragment: Footer</title>
+    <title>Animated Footer - HotelEase</title>
+    <style>
+        /* General Footer Styling */
+        footer.footer {
+            background-color: #0d2438;
+            color: #fff;
+            padding: 30px 0;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer.footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer.footer .text-muted {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+
+        /* Footer Animation - Soft Glowing Circles */
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.05));
+            z-index: 0;
+            animation: moveGlow 15s infinite linear;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        /* Footer Animation Keyframes */
+        @keyframes moveGlow {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -60%) scale(1.2);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        /* Wave animation at the bottom */
+        .waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('https://i.imgur.com/ssblIcD.png') repeat-x;
+            animation: animateWaves 10s linear infinite;
+        }
+
+        @keyframes animateWaves {
+            from {
+                background-position-x: 0;
+            }
+            to {
+                background-position-x: 1000px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .social-icons {
+                margin-top: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 <footer class="footer mt-auto py-3 bg-light" th:fragment="footer">
     <div class="container">
-        <span class="text-muted">© 2024 DIU Travel. All rights reserved.</span>
+        <span class="text-muted">© 2024 HotelEase . Book your dream stay today.</span>
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        </div>
     </div>
+    <div class="waves"></div>
 </footer>
+
+<!-- FontAwesome Icons CDN -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 </html>
