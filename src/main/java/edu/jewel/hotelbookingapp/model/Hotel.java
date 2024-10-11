@@ -1,12 +1,10 @@
 package edu.jewel.hotelbookingapp.model;
-
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 @Entity
 @Getter
 @Setter
@@ -14,11 +12,9 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 public class Hotel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(unique = true, nullable = false)
     private String name;
 

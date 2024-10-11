@@ -2,62 +2,140 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Fragment: Navbar</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-light .navbar-nav .nav-link {
+            color: #000;
+        }
+        .navbar-custom {
+            background-color: #007bff; /* Change this to your desired color */
+            padding: 1rem; /* Adjust padding if needed */
+        }
+        .navbar-custom .navbar-brand {
+            color: #f1c40f; /* Gold color for the brand */
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .navbar-custom .navbar-brand:hover {
+            color: #f39c12; /* Lighter Gold on hover */
+        }
+        .navbar-custom .nav-link {
+            color: white; /* White color for nav links */
+            font-size: 1.1rem;
+        }
+        .navbar-custom .nav-link:hover {
+            color: #f39c12; /* Lighter Gold on hover */
+        }
+        .navbar-custom .btn-link {
+            color: white; /* White color for button links */
+            font-size: 1.1rem;
+        }
+        .navbar-custom .btn-link:hover {
+            color: #f39c12; /* Lighter Gold on hover */
+        }
+        .navbar-custom .navbar-toggler-icon {
+            filter: invert(1); /* Make toggler icon white */
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-light bg-light mb-3" th:fragment="navbar">
-    <div class="container col-md-10">
-        <a class="navbar-brand" th:href="@{/}">
-            <img src="/img/camel-logo-50.png" alt="Logo" width="50" height="50"
-                 class="d-inline-block align-content-center">
-           DIU Traveler
+<!-- Navbar -->
+<nav style="font-size:1.4rem" class="navbar navbar-expand-lg fixed-top bg-light navbar-light" th:fragment="navbar">
+    <div class="container">
+        <a href="/" style="font-family: 'Arial', sans-serif; font-size: 24px; font-weight: bold; color: #007bff; text-decoration: none; letter-spacing: 2px;">
+            Hotel<span style="color: #f39c12;">Ease</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+
+<!--        <a class="navbar-brand" href="#">-->
+<!--            <img-->
+<!--                    id="MDB-logo"-->
+<!--                    src="https://mdbcdn.b-cdn.net/wp-content/uploads/2018/06/logo-mdb-jquery-small.png"-->
+<!--                    alt="MDB Logo"-->
+<!--                    draggable="false"-->
+<!--                    height="30"-->
+<!--            />-->
+<!--        </a>-->
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <i class="fas fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav ml-auto py-2 text-end">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <!-- Anonymous Users -->
                 <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a class="nav-link" th:href="@{/register/manager}">List your property</a>
+                    <a class="nav-link mx-2 rounded" th:href="@{/register/manager}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                        <i class="fas fa-plus-circle pe-2"></i>List your property
+                    </a>
                 </li>
                 <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a class="nav-link" th:href="@{/register/customer}">Register</a>
+                    <a class="nav-link mx-2 rounded" th:href="@{/register/customer}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                        <i class="fas fa-heart pe-2"></i>Register
+                    </a>
                 </li>
                 <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a class="nav-link" th:href="@{/login}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                    <a class="nav-link mx-2 rounded" th:href="@{/login}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                        <i class="fas fa-user pe-2"></i>Login
+                    </a>
                 </li>
-                <!-- Admin -->
+
+                <!-- Admin Role -->
                 <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="nav-link" th:href="@{/admin/dashboard}">Dashboard</a>
+                    <a class="nav-link mx-2 rounded" th:href="@{/admin/dashboard}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                        <i class="fas fa-tachometer-alt pe-2"></i>Dashboard
+                    </a>
                 </li>
-                <!-- Customer -->
+
+                <!-- Customer Role -->
                 <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
-                    <a class="nav-link" th:href="@{/search}">Search Hotels</a>
+                    <a class="nav-link mx-2 rounded" th:href="@{/search}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                        <i class="fas fa-search pe-2"></i>Search Hotels
+                    </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
-                    <a class="nav-link" th:href="@{/customer/bookings}">Bookings</a>
+                    <a class="nav-link mx-2 rounded" th:href="@{/customer/bookings}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                        <i class="fas fa-book pe-2"></i>Bookings
+                    </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
-                    <a class="nav-link" th:href="@{/customer/account}">My Account</a>
+                    <a class="nav-link mx-2 rounded" th:href="@{/customer/account}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                        <i class="fas fa-user-circle pe-2"></i>My Account
+                    </a>
                 </li>
-                <!-- Hotel Manager -->
+
+                <!-- Hotel Manager Role -->
                 <li class="nav-item" sec:authorize="hasRole('ROLE_HOTEL_MANAGER')">
-                    <a class="nav-link" th:href="@{/manager/dashboard}">Dashboard</a>
+                    <a class="nav-link mx-2 rounded" th:href="@{/manager/dashboard}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                        <i class="fas fa-briefcase pe-2"></i>Dashboard
+                    </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('ROLE_HOTEL_MANAGER')">
-                    <a class="nav-link" th:href="@{/manager/account}">My Account</a>
+                    <a class="nav-link mx-2 rounded" th:href="@{/manager/account}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                        <i class="fas fa-user-circle pe-2"></i>My Account
+                    </a>
                 </li>
+
                 <!-- Logout -->
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <div class="d-flex justify-content-end">
-                        <form class="form-inline" method="post" th:action="@{/logout}">
-                            <button class="btn btn-link nav-link" type="submit"><i class="bi bi-box-arrow-right"></i> Logout</button>
-                        </form>
-                    </div>
+                    <form class="form-inline" method="post" th:action="@{/logout}">
+                        <button class="btn btn-black mx-2 rounded" type="submit" style="border: 2px solid #b2f2b2; padding: 10px; border-radius: 25px; transition: border-color 0.3s;">
+                            <i class="fas fa-sign-out-alt pe-2"></i>Logout
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
+
     </div>
 </nav>
+<!-- Navbar -->
+
+
 </body>
 </html>

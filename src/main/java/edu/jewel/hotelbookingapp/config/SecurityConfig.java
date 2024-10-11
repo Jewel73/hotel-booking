@@ -34,12 +34,12 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
         http.headers(f -> f.frameOptions(ff->f.disable()));
         http.authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/css/**", "/js/**", "/webjars/**", "/img/**").permitAll()
+                        authorize.requestMatchers("/css/**", "/js/**", "/webjars/**", "/img/**","/BOOT-INF/**").permitAll()
                                 .requestMatchers("/", "/index","/h2-console", "/register/**").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/customer/**").hasRole("CUSTOMER")
                                 .requestMatchers("/manager/**").hasRole("HOTEL_MANAGER")
-                                .anyRequest().authenticated())
+                                .anyRequest().permitAll())
                 .formLogin(
                         form -> form
                                 .loginPage("/login")

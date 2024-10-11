@@ -1,46 +1,117 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout-main}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotelEase - Login</title>
+    <style>
+        /* General styles */
+        body {
+            background-image: url('/img/maldives-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            flex: 1;
+            margin-right: 10px;
+            text-align: right;
+        }
+
+        input[type="text"], input[type="password"] {
+            flex: 2;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 20px;
+                max-width: 90%;
+            }
+
+            .form-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-group label {
+                text-align: left;
+                margin-bottom: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-<th:block layout:fragment="content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div th:if="${param.error}">
-                    <div class="alert alert-danger">Invalid Email or Password</div>
-                </div>
-                <div th:if="${param.logout}">
-                    <div class="alert alert-success">You have successfully logged out</div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="text-center">Login</h2>
-                    </div>
-                    <div class="card-body">
-                        <form method="post" th:action="@{/login}">
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="username">Email:</label>
-                                <input class="form-control" id="username" name="username" type="email" placeholder="Email" autofocus>
-                                <small class="form-text text-muted">e.g. example@gmail.com</small>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="password">Password:</label>
-                                <input class="form-control" id="password" name="password" type="password"
-                                       placeholder="Enter password">
-                            </div>
-                            <div class="form-group mb-3">
-                                <button type="submit" class="btn btn-primary">Login</button>
-                                <span>Not registered? <a th:href="@{/register/customer}">Register here</a></span>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+<div class="login-container">
+    <h2>Welcome to HotelEase</h2>
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
         </div>
-    </div>
-</th:block>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn-primary">Login</button>
+    </form>
+</div>
 </body>
 </html>

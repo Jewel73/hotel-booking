@@ -30,7 +30,7 @@ public class AuthController {
         return "index";
     }
 
-    @GetMapping("/login")
+   @GetMapping("/login")
     public String loginPage(Authentication authentication) {
         String redirect = getAuthenticatedUserRedirectUrl(authentication);
         if (redirect != null) return redirect;
