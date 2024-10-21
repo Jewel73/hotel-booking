@@ -2,48 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout-main}">
 <head>
-    <title>Registration Page</title>
+    <title>Customer Registration</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <style>
+
+    </style>
 </head>
-<body>
+<body style="background-color: #5f86a2;">
 <th:block layout:fragment="content">
-    <div class="container">
+    <div class="container d-flex justify-content-center align-items-center">
         <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="text-center">Customer Registration</h2>
+            <div class=" offset-md-1" style="width: 500px;">
+                <div class="card shadow-lg" style=" background-color: rgb(22, 50, 77); color: white; border-radius: 10px;">
+                    <div class="card-header text-center">
+                        <h2>Customer Registration</h2>
                     </div>
                     <div class="card-body">
                         <form method="post" th:action="@{/register/customer}" th:object="${user}">
-                            <div class="form-group mb-3">
+                            <!-- Email Field -->
+                            <div class="form-group mb-4">
                                 <label class="form-label" for="username">Email:</label>
                                 <input class="form-control" id="username" type="email" th:field="*{username}"
                                        placeholder="Enter email address" autofocus>
                                 <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
                             </div>
-                            <div class="form-group mb-3">
+
+                            <!-- Password Field -->
+                            <div class="form-group mb-4">
                                 <label class="form-label" for="password">Password:</label>
                                 <input class="form-control" id="password" type="password" th:field="*{password}"
                                        placeholder="Enter password">
                                 <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                             </div>
-                            <div class="form-group mb-3">
+
+                            <!-- First Name Field -->
+                            <div class="form-group mb-4">
                                 <label class="form-label" for="name">First Name:</label>
                                 <input class="form-control" id="name" type="text" th:field="*{name}"
                                        placeholder="Enter first name">
                                 <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                             </div>
-                            <div class="form-group mb-3">
+
+                            <!-- Last Name Field -->
+                            <div class="form-group mb-4">
                                 <label class="form-label" for="lastName">Last Name:</label>
                                 <input class="form-control" id="lastName" type="text" th:field="*{lastName}"
                                        placeholder="Enter last name">
                                 <p class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                             </div>
-                            <div class="form-group mb-3">
-                                <button type="submit" class="btn btn-primary">Register</button>
-                                <span>Already registered? <a th:href="@{/login}">Login here</a></span>
+
+                            <!-- Submit Button -->
+                            <div class="form-group mb-4 text-center">
+                                <button type="submit" class="btn btn-primary px-4 py-2"
+                                        style="background-color: white; color: rgb(22, 50, 77); font-weight: bold; border-radius: 5px;">
+                                    Register
+                                </button>
+                                <div class="mt-3">
+                                    <span>Already registered? <a th:href="@{/login}" style="color: #d1ecf1;">Login here</a></span>
+                                </div>
                             </div>
-                            <div class="alert alert-success" th:if="${param.success}">
+
+                            <!-- Success Alert -->
+                            <div class="alert alert-success mt-3" th:if="${param.success}">
                                 Registration Successful!
                             </div>
                         </form>

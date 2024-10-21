@@ -1,0 +1,44 @@
+/* In static/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #6f2929;}
+
+/* Global styles */
+body {
+    background-color: #5f86a2;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+}
+
+/* Card customization */
+.card {
+    background-color: rgb(22, 50, 77);
+    border-radius: 10px;
+    color: white;
+}
+
+/* Input fields */
+.form-control {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Label styling */
+.form-label {
+    color: white;
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: white;
+    color: rgb(22, 50, 77);
+    font-weight: bold;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #d1ecf1;
+    color: rgb(22, 50, 77);
+}

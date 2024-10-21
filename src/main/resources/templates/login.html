@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout-main}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,27 +10,28 @@
         body {
             background-image: url('/img/maldives-bg.jpg');
             background-size: cover;
-            background-position: center;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
         }
 
         .login-container {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgb(22, 50, 77);
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 100%;
             text-align: center;
+            color: white;
         }
 
-        h2 {
+        h1 {
             margin-bottom: 20px;
-            color: #333;
             font-family: 'Arial', sans-serif;
         }
 
@@ -40,12 +42,14 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
+            background-color: #f7f9fc;
+            color: black;
         }
 
         .btn-primary {
-            width: 100%;
+            width: 50%;
             padding: 10px;
-            background-color: #3498db;
+            background-color: #f3aa60;
             color: white;
             border: none;
             border-radius: 5px;
@@ -55,7 +59,7 @@
         }
 
         .btn-primary:hover {
-            background-color: #2980b9;
+            background-color: #d9904b;
         }
 
         .form-group {
@@ -65,7 +69,9 @@
         .form-group label {
             font-size: 14px;
             font-weight: bold;
-            color: #555;
+            color: white;
+            text-align: left;
+            display: block;
         }
 
         /* Responsive Design */
@@ -84,8 +90,9 @@
     </style>
 </head>
 <body>
+<th:block layout:fragment="content">
 <div class="login-container">
-    <h2>Welcome to HotelEase</h2>
+    <h1 class="display-5 mb-4"><strong>Welcome to <span class="highlight">HotelEase</span></strong></h1>
     <form th:action="@{/login}" method="post">
         <div class="form-group">
             <label for="username">Username</label>
@@ -98,5 +105,7 @@
         <button type="submit" class="btn-primary">Login</button>
     </form>
 </div>
+</th:block>
+
 </body>
 </html>

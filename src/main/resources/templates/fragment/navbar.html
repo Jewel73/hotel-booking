@@ -7,8 +7,17 @@
         .navbar-light .navbar-nav .nav-link {
             color: #000;
         }
+        .navbarbg {
+            --bs-bg-opacity: 1;
+            background-color: rgb(22 50 77) !important;
+        }
+
+        .container{
+
+            margin-bottom:30px;
+        }
         .navbar-custom {
-            background-color: #007bff; /* Change this to your desired color */
+            background-color: rgb(22 50 77) !important; /* Change this to your desired color */
             padding: 1rem; /* Adjust padding if needed */
         }
         .navbar-custom .navbar-brand {
@@ -40,100 +49,103 @@
 </head>
 <body>
 <!-- Navbar -->
-<nav style="font-size:1.4rem" class="navbar navbar-expand-lg fixed-top bg-light navbar-light" th:fragment="navbar">
-    <div class="container">
-        <a href="/" style="font-family: 'Arial', sans-serif; font-size: 24px; font-weight: bold; color: #007bff; text-decoration: none; letter-spacing: 2px;">
-            Hotel<span style="color: #f39c12;">Ease</span>
-        </a>
+<div class="navbarbg">
+    <nav style="background-color: rgb(22 50 77)" class="navbar navbar-expand-lg fixed-top navbar-light" th:fragment="navbar">
+        <div class="container">
+            <a href="/" style="font-family: 'Arial', sans-serif; font-size: 24px; font-weight: bold; color: #007bff; text-decoration: none; letter-spacing: 2px;">
+                Hotel<span style="color: #f39c12;">Ease</span>
+            </a>
 
-<!--        <a class="navbar-brand" href="#">-->
-<!--            <img-->
-<!--                    id="MDB-logo"-->
-<!--                    src="https://mdbcdn.b-cdn.net/wp-content/uploads/2018/06/logo-mdb-jquery-small.png"-->
-<!--                    alt="MDB Logo"-->
-<!--                    draggable="false"-->
-<!--                    height="30"-->
-<!--            />-->
-<!--        </a>-->
-        <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-        >
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-center">
-                <!-- Anonymous Users -->
-                <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a class="nav-link mx-2 rounded" th:href="@{/register/manager}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
-                        <i class="fas fa-plus-circle pe-2"></i>List your property
-                    </a>
-                </li>
-                <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a class="nav-link mx-2 rounded" th:href="@{/register/customer}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
-                        <i class="fas fa-heart pe-2"></i>Register
-                    </a>
-                </li>
-                <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a class="nav-link mx-2 rounded" th:href="@{/login}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
-                        <i class="fas fa-user pe-2"></i>Login
-                    </a>
-                </li>
+            <!--        <a class="navbar-brand" href="#">-->
+            <!--            <img-->
+            <!--                    id="MDB-logo"-->
+            <!--                    src="https://mdbcdn.b-cdn.net/wp-content/uploads/2018/06/logo-mdb-jquery-small.png"-->
+            <!--                    alt="MDB Logo"-->
+            <!--                    draggable="false"-->
+            <!--                    height="30"-->
+            <!--            />-->
+            <!--        </a>-->
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <!-- Anonymous Users -->
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="nav-link mx-2 rounded" th:href="@{/register/manager}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                            <i class="fas fa-plus-circle pe-2"></i>List your property
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="nav-link mx-2 rounded" th:href="@{/register/customer}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                            <i class="fas fa-heart pe-2"></i>Register
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="nav-link mx-2 rounded" th:href="@{/login}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                            <i class="fas fa-user pe-2"></i>Login
+                        </a>
+                    </li>
 
-                <!-- Admin Role -->
-                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="nav-link mx-2 rounded" th:href="@{/admin/dashboard}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
-                        <i class="fas fa-tachometer-alt pe-2"></i>Dashboard
-                    </a>
-                </li>
+                    <!-- Admin Role -->
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link mx-2 rounded" th:href="@{/admin/dashboard}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                            <i class="fas fa-tachometer-alt pe-2"></i>Dashboard
+                        </a>
+                    </li>
 
-                <!-- Customer Role -->
-                <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
-                    <a class="nav-link mx-2 rounded" th:href="@{/search}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
-                        <i class="fas fa-search pe-2"></i>Search Hotels
-                    </a>
-                </li>
-                <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
-                    <a class="nav-link mx-2 rounded" th:href="@{/customer/bookings}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
-                        <i class="fas fa-book pe-2"></i>Bookings
-                    </a>
-                </li>
-                <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
-                    <a class="nav-link mx-2 rounded" th:href="@{/customer/account}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
-                        <i class="fas fa-user-circle pe-2"></i>My Account
-                    </a>
-                </li>
+                    <!-- Customer Role -->
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
+                        <a class="nav-link mx-2 rounded" th:href="@{/search}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                            <i class="fas fa-search pe-2"></i>Search Hotels
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
+                        <a class="nav-link mx-2 rounded" th:href="@{/customer/bookings}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                            <i class="fas fa-book pe-2"></i>Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
+                        <a class="nav-link mx-2 rounded" th:href="@{/customer/account}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                            <i class="fas fa-user-circle pe-2"></i>My Account
+                        </a>
+                    </li>
 
-                <!-- Hotel Manager Role -->
-                <li class="nav-item" sec:authorize="hasRole('ROLE_HOTEL_MANAGER')">
-                    <a class="nav-link mx-2 rounded" th:href="@{/manager/dashboard}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
-                        <i class="fas fa-briefcase pe-2"></i>Dashboard
-                    </a>
-                </li>
-                <li class="nav-item" sec:authorize="hasRole('ROLE_HOTEL_MANAGER')">
-                    <a class="nav-link mx-2 rounded" th:href="@{/manager/account}" style="border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
-                        <i class="fas fa-user-circle pe-2"></i>My Account
-                    </a>
-                </li>
+                    <!-- Hotel Manager Role -->
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_HOTEL_MANAGER')">
+                        <a class="nav-link mx-2 rounded" th:href="@{/manager/dashboard}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                            <i class="fas fa-briefcase pe-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_HOTEL_MANAGER')">
+                        <a class="nav-link mx-2 rounded" th:href="@{/manager/account}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                            <i class="fas fa-user-circle pe-2"></i>My Account
+                        </a>
+                    </li>
 
-                <!-- Logout -->
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form class="form-inline" method="post" th:action="@{/logout}">
-                        <button class="btn btn-black mx-2 rounded" type="submit" style="border: 2px solid #b2f2b2; padding: 10px; border-radius: 25px; transition: border-color 0.3s;">
-                            <i class="fas fa-sign-out-alt pe-2"></i>Logout
-                        </button>
-                    </form>
-                </li>
-            </ul>
+                    <!-- Logout -->
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form class="form-inline" method="post" th:action="@{/logout}">
+                            <button class="btn btn-black mx-2 rounded" type="submit" style="color : white; border: 2px solid #b2f2b2; padding: 10px; border-radius: 25px; transition: border-color 0.3s;">
+                                <i class="fas fa-sign-out-alt pe-2"></i>Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
         </div>
+    </nav>
 
-    </div>
-</nav>
+</div>
 <!-- Navbar -->
 
 
