@@ -24,32 +24,24 @@
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            width:700px;
+
             width: 100%;
             text-align: center;
             color: white;
         }
 
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 17px;
             font-family: 'Arial', sans-serif;
         }
 
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            background-color: #f7f9fc;
-            color: black;
-        }
+
 
         .btn-primary {
             width: 50%;
             padding: 10px;
-            background-color: #f3aa60;
+            background-color: #2f489d;
             color: white;
             border: none;
             border-radius: 5px;
@@ -66,12 +58,33 @@
             margin-bottom: 15px;
         }
 
+        .form-control {
+            background-color: #344d72;
+            color: white;
+            border: 1px solid #ccc;
+        }
+
+        .form-control::placeholder {
+            color: #aaa;
+        }
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: #d8d8ef;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+}
+
+    .form-control::placeholder {
+            color: #aaa;
+        }
         .form-group label {
             font-size: 14px;
             font-weight: bold;
             color: white;
             text-align: left;
             display: block;
+            padding:4px;
         }
 
         /* Responsive Design */
@@ -92,16 +105,18 @@
 <body>
 <th:block layout:fragment="content">
 <div class="login-container">
-    <h1 class="display-5 mb-4"><strong>Welcome to <span class="highlight">HotelEase</span></strong></h1>
+    <h1 class=" mb-4">Welcome to <span style="color:#ff841d" class="highlight">HotelEase</span></h1>
     <form th:action="@{/login}" method="post">
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <input class="form-control" type="text" id="username" name="username" placeholder="Enter your username" required>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <input class="form-control" type="password" id="password" name="password" placeholder="Enter your password" required>
         </div>
+
+
         <button type="submit" class="btn-primary">Login</button>
     </form>
 </div>
