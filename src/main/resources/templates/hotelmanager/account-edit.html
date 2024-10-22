@@ -2,7 +2,96 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout-main}">
 <head>
-    <title>Hotel Manager Edit Account</title>
+    <title>Manager Edit Account</title>
+    <style>
+        body {
+            background-color: #f4f7fc;
+        }
+
+        .container {
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #00707e;
+            color: #ffffff;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #00707e;
+            box-shadow: 0 0 5px rgba(0, 112, 126, 0.2);
+        }
+
+        .btn-primary {
+            background-color: #00707e;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #005f6a;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .text-danger {
+            font-size: 0.9rem;
+            color: #e3342f;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .row {
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -11,10 +100,10 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="text-center">User Account Editing</h2>
+                        <h2>User Account Editing</h2>
                     </div>
                     <div class="card-body">
-                        <form method="post" th:action="@{/manager/account/edit}" th:object="${user}">
+                        <form method="post" th:action="@{/customer/account/edit}" th:object="${user}">
                             <div class="form-group mb-3">
                                 <label class="form-label" for="username">Email:</label>
                                 <input class="form-control" id="username" type="email" th:field="*{username}"
@@ -33,7 +122,7 @@
                                        placeholder="Enter last name">
                                 <p class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                             </div>
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 text-center">
                                 <button type="submit" class="btn btn-primary">Update</button>
                                 <a th:href="@{/manager/account}" class="btn btn-secondary">Cancel</a>
                             </div>

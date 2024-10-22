@@ -3,6 +3,79 @@
       layout:decorate="~{/layout/layout-main}">
 <head>
     <title>Account Details</title>
+    <style>
+        body {
+            background-color: #f4f7fc;
+        }
+
+        .container {
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #00707e;
+            color: #ffffff;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-control-plaintext {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .btn-primary {
+            background-color: #00707e;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #005f6a;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .row {
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -14,32 +87,32 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="text-center">User Account Details</h2>
+                        <h2>User Account Details</h2>
                     </div>
                     <div class="card-body">
                         <form>
                             <div class="form-group mb-3 row">
-                                <label class="col-sm-3 col-form-label fw-bold" for="username">Username:</label>
+                                <label class="col-sm-3 col-form-label" for="username">Username:</label>
                                 <div class="col-sm-9">
                                     <input class="form-control-plaintext" id="username" readonly type="text"
                                            th:value="${user.username}">
                                 </div>
                             </div>
                             <div class="form-group mb-3 row">
-                                <label class="col-sm-3 col-form-label fw-bold" for="name">First Name:</label>
+                                <label class="col-sm-3 col-form-label" for="name">First Name:</label>
                                 <div class="col-sm-9">
                                     <input class="form-control-plaintext" id="name" readonly type="text"
                                            th:value="${user.name}">
                                 </div>
                             </div>
                             <div class="form-group mb-3 row">
-                                <label class="col-sm-3 col-form-label fw-bold" for="lastName">Last Name:</label>
+                                <label class="col-sm-3 col-form-label" for="lastName">Last Name:</label>
                                 <div class="col-sm-9">
                                     <input class="form-control-plaintext" id="lastName" readonly type="text"
                                            th:value="${user.lastName}">
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
+                            <div class="form-group text-center">
                                 <a th:href="@{/manager/account/edit}" class="btn btn-primary">Edit User Info</a>
                             </div>
                         </form>

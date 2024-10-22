@@ -3,40 +3,103 @@
       layout:decorate="~{/layout/layout-main}">
 <head>
     <title>Manager Dashboard</title>
+    <style>
+        body {
+            background-color: #f0f2f5;
+        }
+
+        .container {
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .card-body i {
+            color: #00707e;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #00707e;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            background-color: #005f6a;
+        }
+
+        .row {
+            margin-bottom: 30px;
+        }
+
+        .fs-1 {
+            font-size: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .col-md-4 {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <i class="bi bi-plus-square-dotted fs-1"></i>
-                    <h5 class="card-title">Add Hotel</h5>
-                    <a th:href="@{/manager/hotels/add}" class="btn btn-primary">Go</a>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="bi bi-plus-square-dotted fs-1"></i>
+                        <h5 class="card-title">Add Hotel</h5>
+                        <a th:href="@{/manager/hotels/add}" class="btn btn-primary">Open</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <i class="bi bi-building fs-1"></i>
-                    <h5 class="card-title">My Hotels</h5>
-                    <a th:href="@{/manager/hotels}" class="btn btn-primary">Go</a>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="bi bi-building fs-1"></i>
+                        <h5 class="card-title">My Hotels</h5>
+                        <a th:href="@{/manager/hotels}" class="btn btn-primary">Open</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <i class="bi bi-calendar-check fs-1"></i>
-                    <h5 class="card-title">Hotel Bookings</h5>
-                    <a th:href="@{/manager/bookings}" class="btn btn-primary">Go</a>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="bi bi-calendar-check fs-1"></i>
+                        <h5 class="card-title">Hotel Bookings</h5>
+                        <a th:href="@{/manager/bookings}" class="btn btn-primary">Open</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </th:block>
 </body>
 </html>

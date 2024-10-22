@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout-main}">
+
+<style>
+
+            body {
+            background-color: #f8f9fa;
+        }
+</style>
 <head>
     <title>Search Hotel</title>
 </head>
@@ -13,30 +20,30 @@
                     <img class="img-fluid rounded" src="/img/map-banner.jpg" alt="Map Banner">
                 </div>
                 <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
-                <div class="card">
-                    <div class="card-header">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header" style="background-color: rgb(0, 48, 87); color: white;">
                         <h2 class="text-center">Search for Hotels</h2>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: rgb(245, 245, 245);">
                         <form method="post" th:action="@{/search}" th:object="${hotelSearchDTO}">
                             <div class="form-group mb-3">
-                                <label class="form-label" for="city">City:</label>
+                                <label class="form-label" for="city" style="color: rgb(0, 48, 87); font-weight: bold;">City:</label>
                                 <input class="form-control" id="city" type="text" th:field="*{city}"
-                                       placeholder="Enter city" autofocus>
+                                       placeholder="Enter city" style="border-color: rgb(0, 48, 87);" autofocus>
                                 <p class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label" for="checkinDate">Check-in Date:</label>
-                                <input class="form-control" id="checkinDate" type="text" th:field="*{checkinDate}">
+                                <label class="form-label" for="checkinDate" style="color: rgb(0, 48, 87); font-weight: bold;">Check-in Date:</label>
+                                <input class="form-control" id="checkinDate" type="text" th:field="*{checkinDate}" style="border-color: rgb(0, 48, 87);">
                                 <p class="text-danger" th:if="${#fields.hasErrors('checkinDate')}" th:errors="*{checkinDate}"></p>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label" for="checkoutDate">Check-out Date:</label>
-                                <input class="form-control" id="checkoutDate" type="text" th:field="*{checkoutDate}">
+                                <label class="form-label" for="checkoutDate" style="color: rgb(0, 48, 87); font-weight: bold;">Check-out Date:</label>
+                                <input class="form-control" id="checkoutDate" type="text" th:field="*{checkoutDate}" style="border-color: rgb(0, 48, 87);">
                                 <p class="text-danger" th:if="${#fields.hasErrors('checkoutDate')}" th:errors="*{checkoutDate}"></p>
                             </div>
-                            <div class="form-group mb-3">
-                                <button type="submit" class="btn btn-primary">Search</button>
+                            <div class="form-group mb-3 text-center">
+                                <button type="submit" class="btn" style="background-color: rgb(0, 48, 87); color: white; padding-left: 30px; padding-right: 30px;">Search</button>
                             </div>
                         </form>
                     </div>
@@ -45,6 +52,10 @@
         </div>
     </div>
 </th:block>
+
+
+
+
 <th:block layout:fragment="additional-scripts">
     <script>
         $(document).ready(function () {

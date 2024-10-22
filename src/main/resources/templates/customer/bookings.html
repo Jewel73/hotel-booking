@@ -3,38 +3,110 @@
       layout:decorate="~{/layout/layout-main}">
 <head>
     <title>Your Bookings</title>
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .container {
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #16324a;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .table-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background-color: #00707e;
+            color: #ffffff;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            border-top: none;
+        }
+
+        table td {
+            padding: 12px;
+            border-top: 1px solid #dddddd;
+            color: #555555;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e0f7fa;
+        }
+
+        .btn-primary {
+            background-color: #00707e;
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #005f6a;
+            color: white;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-end {
+            text-align: right;
+        }
+
+    </style>
 </head>
 <body>
 <th:block layout:fragment="content">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Your Bookings</h2>
-                <table class="table table-striped align-middle">
-                    <thead>
-                    <tr>
-                        <th>City</th>
-                        <th>Check-In</th>
-                        <th>Check-Out</th>
-                        <th>Hotel</th>
-                        <th>Total Price</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="align-middle" th:each="booking : ${bookings}">
-                        <td th:text="${booking.hotelAddress.city}"></td>
-                        <td th:text="${booking.checkinDate}"></td>
-                        <td th:text="${booking.checkoutDate}"></td>
-                        <td th:text="${booking.hotelName}"></td>
-                        <td th:text="'$ ' + ${#numbers.formatDecimal(booking.totalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
-                        <td>
-                            <a th:href="@{/customer/bookings/{id}(id=${booking.id})}" class="btn btn-primary btn-sm">Details</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="table-container">
+            <h2>Your Bookings</h2>
+            <table class="table table-striped align-middle">
+                <thead>
+                <tr>
+                    <th>City</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Hotel</th>
+                    <th>Total Price</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="align-middle" th:each="booking : ${bookings}">
+                    <td th:text="${booking.hotelAddress.city}"></td>
+                    <td th:text="${booking.checkinDate}"></td>
+                    <td th:text="${booking.checkoutDate}"></td>
+                    <td th:text="${booking.hotelName}"></td>
+                    <td th:text="'৳ ' + ${#numbers.formatDecimal(booking.totalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
+                    <td class="text-end">
+                        <a th:href="@{/customer/bookings/{id}(id=${booking.id})}" class="btn btn-primary btn-sm">Details</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </th:block>

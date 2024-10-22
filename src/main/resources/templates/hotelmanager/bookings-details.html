@@ -3,23 +3,69 @@
       layout:decorate="~{/layout/layout-main}">
 <head>
     <title>Booking Details</title>
+    <style>
+        .card {
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+         .card-header {
+            background-color: #00707e;
+            color: #ffffff;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            padding: 20px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-body h5, .card-body p {
+            margin-bottom: 10px;
+        }
+        .back-btn {
+    background-color: #0059b9;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+        .guest-details, .room-list, .date-info {
+            margin-bottom: 20px;
+        }
+        hr {
+            border-color: #ddd;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
 <th:block layout:fragment="content">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-header">
                         <h2>Booking Details</h2>
                     </div>
                     <div class="card-body">
                         <h5>Confirmation Number:</h5>
-                        <p class="mb-3" th:text="${bookingDTO.confirmationNumber}"></p>
+                        <p th:text="${bookingDTO.confirmationNumber}"></p>
                         <hr>
-                        <h3 class="mb-2" th:text="${bookingDTO.hotelName}">Hotel</h3>
-                        <p class="small mb-4" th:text="${bookingDTO.hotelAddress.addressLine + ', ' + bookingDTO.hotelAddress.city + ', ' + bookingDTO.hotelAddress.country}"></p>
-                        <div class="row text-center my-5">
+                        <h3 th:text="${bookingDTO.hotelName}">Hotel</h3>
+                        <p class="small text-muted" th:text="${bookingDTO.hotelAddress.addressLine + ', ' + bookingDTO.hotelAddress.city + ', ' + bookingDTO.hotelAddress.country}"></p>
+
+                        <div class="row text-center date-info">
                             <div class="col-md-4">
                                 <h5>Check-in</h5>
                                 <p th:text="${bookingDTO.checkinDate}"></p>
@@ -33,25 +79,33 @@
                                 <p th:text="${days} + ' night(s)'"></p>
                             </div>
                         </div>
+
                         <h5>Rooms:</h5>
-                        <ul class="mb-3">
+                        <ul class="room-list">
                             <li th:each="room : ${bookingDTO.roomSelections}">
                                 <span th:text="${room.count}"></span> x <span th:text="${room.roomType}"></span>
                             </li>
                         </ul>
+
                         <hr>
+
                         <h3>Total Price:</h3>
-                        <p class="mb-3" th:text="'$ ' + ${#numbers.formatDecimal(bookingDTO.totalPrice, 1, 'COMMA', 2, 'POINT')}"></p>
+                        <p class="total-price" th:text="'$ ' + ${#numbers.formatDecimal(bookingDTO.totalPrice, 1, 'COMMA', 2, 'POINT')}"></p>
+
                         <h5 class="small">Payment Method:</h5>
-                        <p class="small mb-3" th:text="${bookingDTO.paymentMethod}"></p>
+                        <p class="small text-muted" th:text="${bookingDTO.paymentMethod}"></p>
+
                         <hr>
+
                         <h5>Guest Details:</h5>
-                        <p class="mb-2">Name: <span th:text="${bookingDTO.customerName}"></span></p>
-                        <p class="mb-3">Email: <span th:text="${bookingDTO.customerEmail}"></span></p>
+                        <div class="guest-details">
+                            <p>Name: <span th:text="${bookingDTO.customerName}"></span></p>
+                            <p>Email: <span th:text="${bookingDTO.customerEmail}"></span></p>
+                        </div>
                     </div>
                 </div>
-                <div class="mt-3">
-                    <a href="/manager/bookings" class="btn btn-primary">Back to Bookings</a>
+                <div class="m-4 text-center">
+                    <a href="/manager/bookings" class="back-btn">Back to Bookings</a>
                 </div>
             </div>
         </div>

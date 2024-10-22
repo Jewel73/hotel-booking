@@ -3,6 +3,67 @@
       layout:decorate="~{/layout/layout-main}">
 <head>
     <title>My Hotels</title>
+    <style>
+        body {
+            background-color: #f4f7fc;
+        }
+
+        .container {
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00707e;
+        }
+
+        .alert {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .table {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th {
+            background-color: #00707e;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #ffffff;
+            border-radius: 5px;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .align-middle {
+            text-align: center;
+        }
+
+        .row {
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -11,8 +72,7 @@
             <div class="col-md-12">
                 <h2>My Hotels</h2>
                 <div th:if="${message}">
-                    <div class="alert alert-success" th:text="${message}">
-                    </div>
+                    <div class="alert" th:text="${message}"></div>
                 </div>
                 <table class="table table-striped align-middle">
                     <thead>
@@ -26,13 +86,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="align-middle" th:each="hotel : ${hotels}">
+                    <tr th:each="hotel : ${hotels}">
                         <td th:text="${hotel.id}"></td>
                         <td th:text="${hotel.name}"></td>
-                        <td th:each="room : ${hotel.roomDTOs}" th:if="${room.roomType.name() == 'SINGLE'}" th:text="'$ ' + ${#numbers.formatDecimal(room.pricePerNight, 1, 'COMMA', 2, 'POINT')}"></td>
-                        <td th:each="room : ${hotel.roomDTOs}" th:if="${room.roomType.name() == 'DOUBLE'}" th:text="'$ ' + ${#numbers.formatDecimal(room.pricePerNight, 1, 'COMMA', 2, 'POINT')}"></td>
+                        <td th:each="room : ${hotel.roomDTOs}" th:if="${room.roomType.name() == 'SINGLE'}" th:text="'৳ ' + ${#numbers.formatDecimal(room.pricePerNight, 1, 'COMMA', 2, 'POINT')}"></td>
+                        <td th:each="room : ${hotel.roomDTOs}" th:if="${room.roomType.name() == 'DOUBLE'}" th:text="'৳ ' + ${#numbers.formatDecimal(room.pricePerNight, 1, 'COMMA', 2, 'POINT')}"></td>
                         <td>
-                            <a th:href="@{/manager/hotels/edit/{id}(id=${hotel.id})}">Edit</a>
+                            <a th:href="@{/manager/hotels/edit/{id}(id=${hotel.id})}" class="btn btn-primary btn-sm">Edit</a>
                         </td>
                         <td>
                             <form method="post"
