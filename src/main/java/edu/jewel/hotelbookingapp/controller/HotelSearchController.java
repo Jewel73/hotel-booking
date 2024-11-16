@@ -1,8 +1,10 @@
 package edu.jewel.hotelbookingapp.controller;
 
+import edu.jewel.hotelbookingapp.model.Review;
 import edu.jewel.hotelbookingapp.model.dto.HotelAvailabilityDTO;
 import edu.jewel.hotelbookingapp.model.dto.HotelSearchDTO;
 import edu.jewel.hotelbookingapp.service.HotelSearchService;
+import edu.jewel.hotelbookingapp.service.ReviewService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ import java.util.List;
 public class HotelSearchController {
 
     private final HotelSearchService hotelSearchService;
+    private final ReviewService reviewService;
 
     @GetMapping("/search")
     public String showSearchForm(@ModelAttribute("hotelSearchDTO") HotelSearchDTO hotelSearchDTO) {
@@ -98,11 +101,13 @@ public class HotelSearchController {
             HotelAvailabilityDTO hotelAvailabilityDTO = hotelSearchService.findAvailableHotelById(id, parsedCheckinDate, parsedCheckoutDate);
 
             long durationDays = ChronoUnit.DAYS.between(parsedCheckinDate, parsedCheckoutDate);
+            List<Review> reviews = reviewService.getReviewsByHotel(id);
 
             model.addAttribute("hotel", hotelAvailabilityDTO);
             model.addAttribute("durationDays", durationDays);
             model.addAttribute("checkinDate", checkinDate);
             model.addAttribute("checkoutDate", checkoutDate);
+            model.addAttribute("reviews", reviews);
 
             return "hotelsearch/hotel-details";
 

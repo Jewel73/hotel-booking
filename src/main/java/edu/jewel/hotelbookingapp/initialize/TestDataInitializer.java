@@ -95,6 +95,8 @@ public class TestDataInitializer implements CommandLineRunner {
 
                 Hotel hotelIst1 = Hotel.builder().name("Swissotel The Bosphorus Istanbul")
                         .address(addressIst1).hotelManager(hm1).build();
+
+
                 Hotel hotelIst2 = Hotel.builder().name("Four Seasons Hotel Istanbul")
                         .address(addressIst2).hotelManager(hm1).build();
                 Hotel hotelIst3 = Hotel.builder().name("Ciragan Palace Kempinski Istanbul")

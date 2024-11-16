@@ -32,6 +32,11 @@ public class Hotel {
     @JoinColumn(nullable = false)
     private HotelManager hotelManager;
 
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Review> reviews = new ArrayList<>();
+
+
     @Override
     public String toString() {
         return "Hotel{" +
