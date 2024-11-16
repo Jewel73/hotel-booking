@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -36,5 +37,9 @@ public class ReviewServiceImpl implements ReviewService {
         } else {
             throw new IllegalArgumentException("Review with ID " + reviewId + " does not exist.");
         }
+    }
+
+    public Optional<Review> getReviewByCustomerAndHotel(Long customerId, Long hotelId) {
+        return reviewRepository.findByCustomerIdAndHotelId(customerId, hotelId);
     }
 }

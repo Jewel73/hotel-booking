@@ -223,14 +223,47 @@
             </div>
             <div th:each="review : ${reviews}" class="review">
                 <div class="stars">
-                    <span th:each="star : ${#numbers.sequence(1, review.rating)}">&#9733;</span>
+                    <span th:each="star : ${#numbers.sequence(1, review.rating)}">&#9733;</span> <span th:text="${review.customer.user.name}"></span>
                     <span th:if="${review.rating < 5}" th:each="star : ${#numbers.sequence(1, 5 - review.rating)}"
                           class="empty">&#9734;</span>
                 </div>
                 <p class="review-comment" th:text="${review.comment}"></p>
             </div>
         </div>
-    </div>
+
+        <br>
+        <hr/>
+        <div th:if="${canReview}" id="add-review-section" class="add-review">
+            <h4 class="text-warning">Write a Review</h4>
+            <br>
+            <form action="/reviews/add" method="post" id="review-form">
+                <input type="hidden" name="hotelId" th:value="${hotel.id}"/>
+                <input type="hidden" name="customerId" th:value="${customerId}"/>
+
+                <!-- Rating Field -->
+                <div class="form-group mb-3">
+                    <strong for="rating">Rating:</strong>
+                    <select id="rating" name="rating" class="form-select" required>
+                        <option value="" selected disabled>Select Rating</option>
+                        <option value="1">&#9733; Poor</option>
+                        <option value="2">&#9733;&#9733; Fair</option>
+                        <option value="3">&#9733;&#9733;&#9733; Good</option>
+                        <option value="4">&#9733;&#9733;&#9733;&#9733; Very Good</option>
+                        <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; Excellent</option>
+                    </select>
+                </div>
+
+                <!-- Comment Field -->
+                <div class="form-group mb-3">
+                    <strong for="comment">Comment:</strong>
+                    <textarea id="comment" name="comment" rows="4" class="form-control" placeholder="Write your review..." required></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
+
 </th:block>
 <th:block layout:fragment="additional-scripts">
     <th:block th:insert="~{fragment/leaflet :: leaflet-js}"></th:block>

@@ -152,6 +152,11 @@ public class BookingServiceImpl implements BookingService {
                 .build();
     }
 
+    @Override
+    public List<Booking> findByCustomerAndHotelId(Long customerId, Long hotelId) {
+        return bookingRepository.findByCustomerIdAndHotelId(customerId, hotelId);
+    }
+
     private Booking mapBookingInitDtoToBookingModel(BookingInitiationDTO bookingInitiationDTO, Customer customer, Hotel hotel) {
         Booking booking = Booking.builder()
                 .customer(customer)

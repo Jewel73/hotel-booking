@@ -3,6 +3,7 @@ package edu.jewel.hotelbookingapp.service;
 import edu.jewel.hotelbookingapp.model.Review;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReviewService {
     /**
@@ -27,4 +28,6 @@ public interface ReviewService {
      * @param reviewId the ID of the review to delete
      */
     void deleteReview(Long reviewId);
+
+    Optional<Review> getReviewByCustomerAndHotel(Long customerId, Long hotelId);
 }

@@ -67,7 +67,7 @@ public class HotelSearchServiceImpl implements HotelSearchService {
 
     @Override
     public HotelAvailabilityDTO findAvailableHotelById(Long hotelId, LocalDate checkinDate, LocalDate checkoutDate) {
-        validateCheckinAndCheckoutDates(checkinDate, checkoutDate);
+        //validateCheckinAndCheckoutDates(checkinDate, checkoutDate);
 
         log.info("Attempting to find hotel with ID {} with available rooms from {} to {}", hotelId, checkinDate, checkoutDate);
 

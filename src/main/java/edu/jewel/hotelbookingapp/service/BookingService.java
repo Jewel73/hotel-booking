@@ -26,4 +26,6 @@ public interface BookingService {
 
     BookingDTO mapBookingModelToBookingDto(Booking booking);
 
+    List<Booking> findByCustomerAndHotelId(Long customerId, Long hotelId);
+
 }

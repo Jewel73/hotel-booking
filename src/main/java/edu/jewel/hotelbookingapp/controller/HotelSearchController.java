@@ -1,14 +1,17 @@
 package edu.jewel.hotelbookingapp.controller;
 
+import edu.jewel.hotelbookingapp.model.Customer;
 import edu.jewel.hotelbookingapp.model.Review;
 import edu.jewel.hotelbookingapp.model.dto.HotelAvailabilityDTO;
 import edu.jewel.hotelbookingapp.model.dto.HotelSearchDTO;
-import edu.jewel.hotelbookingapp.service.HotelSearchService;
-import edu.jewel.hotelbookingapp.service.ReviewService;
+import edu.jewel.hotelbookingapp.model.dto.UserDTO;
+import edu.jewel.hotelbookingapp.service.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +30,9 @@ public class HotelSearchController {
 
     private final HotelSearchService hotelSearchService;
     private final ReviewService reviewService;
+    private final CustomerService customerService;
+    private final BookingService bookingService;
+    private final UserService userService;
 
     @GetMapping("/search")
     public String showSearchForm(@ModelAttribute("hotelSearchDTO") HotelSearchDTO hotelSearchDTO) {
@@ -96,18 +102,24 @@ public class HotelSearchController {
             LocalDate parsedCheckinDate = LocalDate.parse(checkinDate);
             LocalDate parsedCheckoutDate = LocalDate.parse(checkoutDate);
 
-            validateCheckinAndCheckoutDates(parsedCheckinDate, parsedCheckoutDate);
+            //validateCheckinAndCheckoutDates(parsedCheckinDate, parsedCheckoutDate);
 
             HotelAvailabilityDTO hotelAvailabilityDTO = hotelSearchService.findAvailableHotelById(id, parsedCheckinDate, parsedCheckoutDate);
 
             long durationDays = ChronoUnit.DAYS.between(parsedCheckinDate, parsedCheckoutDate);
             List<Review> reviews = reviewService.getReviewsByHotel(id);
+            long userId = getLoggedInUserId();
+            Customer customer = customerService.findByUserId(userId)
+                    .orElseThrow(() -> new EntityNotFoundException("Customer not found with user ID: " + userId));
+            boolean canReviewGive = bookingService.findByCustomerAndHotelId(customer.getId(), id).size() >0 ? true: false;
 
             model.addAttribute("hotel", hotelAvailabilityDTO);
             model.addAttribute("durationDays", durationDays);
             model.addAttribute("checkinDate", checkinDate);
             model.addAttribute("checkoutDate", checkoutDate);
             model.addAttribute("reviews", reviews);
+            model.addAttribute("canReview", canReviewGive);
+            model.addAttribute("customerId", customer.getId());
 
             return "hotelsearch/hotel-details";
 
@@ -144,6 +156,14 @@ public class HotelSearchController {
         LocalDate parsedCheckinDate = LocalDate.parse(checkinDate);
         LocalDate parsedCheckoutDate = LocalDate.parse(checkoutDate);
         validateCheckinAndCheckoutDates(parsedCheckinDate, parsedCheckoutDate);
+    }
+
+    private Long getLoggedInUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        UserDTO userDTO = userService.findUserDTOByUsername(username);
+        log.info("Fetched logged in user ID: {}", userDTO.getId());
+        return userDTO.getId();
     }
 
 }
