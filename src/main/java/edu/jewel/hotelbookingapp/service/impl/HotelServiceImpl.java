@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -186,8 +187,10 @@ public class HotelServiceImpl implements HotelService {
     private Hotel mapHotelRegistrationDtoToHotel(HotelRegistrationDTO dto) {
         return Hotel.builder()
                 .name(formatText(dto.getName()))
+                .photos(new ArrayList<>(dto.getPhotos())) // Map photos from DTO
                 .build();
     }
+
 
     @Override
     public HotelDTO mapHotelToHotelDto(Hotel hotel) {

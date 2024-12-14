@@ -6,10 +6,15 @@ import edu.jewel.hotelbookingapp.model.dto.HotelAvailabilityDTO;
 import edu.jewel.hotelbookingapp.model.dto.HotelSearchDTO;
 import edu.jewel.hotelbookingapp.model.dto.UserDTO;
 import edu.jewel.hotelbookingapp.service.*;
+import edu.jewel.hotelbookingapp.service.impl.PhotoStorageService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +23,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
@@ -33,6 +41,7 @@ public class HotelSearchController {
     private final CustomerService customerService;
     private final BookingService bookingService;
     private final UserService userService;
+    private final PhotoStorageService photoStorageService;
 
     @GetMapping("/search")
     public String showSearchForm(@ModelAttribute("hotelSearchDTO") HotelSearchDTO hotelSearchDTO) {
@@ -95,6 +104,63 @@ public class HotelSearchController {
 
         return "hotelsearch/search-results";
     }
+
+    @GetMapping("uploads/hotels/{filename}")
+    public ResponseEntity<Resource> fetchPhoto(@PathVariable String filename) {
+        try {
+            // Get the photo resource from the service
+            Resource photo = photoStorageService.getPhoto(filename);
+
+            // Determine the file's content type
+            String contentType = Files.probeContentType(Paths.get(photo.getFile().getAbsolutePath()));
+
+            // Set a default content type if it couldn't be determined
+            if (contentType == null) {
+                contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + filename + "\"")
+                    .body(photo);
+        } catch (IOException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/explore")
+    public String recomendationPage(Model model, RedirectAttributes redirectAttributes) {
+        try {
+
+            List<HotelAvailabilityDTO> hotels = hotelSearchService.findAll();
+
+            if (hotels.isEmpty()) {
+                model.addAttribute("noHotelsFound", true);
+            }
+
+            long durationDays = ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now());
+
+            model.addAttribute("hotels", hotels);
+            model.addAttribute("days", durationDays);
+
+        } catch (DateTimeParseException e) {
+            log.error("Invalid date format provided for URL search", e);
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid date format. Please use the search form.");
+            return "redirect:/search";
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid arguments provided for URL search", e);
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/search";
+        } catch (Exception e) {
+            log.error("An error occurred while searching for hotels", e);
+            redirectAttributes.addFlashAttribute("errorMessage", "An unexpected error occurred. Please try again later.");
+            return "redirect:/search";
+        }
+
+        return "hotelsearch/recommendation";
+    }
+
+
 
     @GetMapping("/hotel-details/{id}")
     public String showHotelDetails(@PathVariable Long id, @RequestParam String checkinDate, @RequestParam String checkoutDate, Model model, RedirectAttributes redirectAttributes) {

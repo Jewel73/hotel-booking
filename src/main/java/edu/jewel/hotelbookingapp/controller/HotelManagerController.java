@@ -9,6 +9,7 @@ import edu.jewel.hotelbookingapp.model.dto.RoomDTO;
 import edu.jewel.hotelbookingapp.service.BookingService;
 import edu.jewel.hotelbookingapp.service.HotelService;
 import edu.jewel.hotelbookingapp.service.UserService;
+import edu.jewel.hotelbookingapp.service.impl.PhotoStorageService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,6 +37,7 @@ public class HotelManagerController {
     private final HotelService hotelService;
     private final UserService userService;
     private final BookingService bookingService;
+    private final PhotoStorageService photoStorageService;
 
     @GetMapping("/dashboard")
     public String dashboard() {
@@ -54,18 +59,34 @@ public class HotelManagerController {
     }
 
     @PostMapping("/hotels/add")
-    public String addHotel(@Valid @ModelAttribute("hotel") HotelRegistrationDTO hotelRegistrationDTO, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String addHotel(@Valid @ModelAttribute("hotel") HotelRegistrationDTO hotelRegistrationDTO,
+                           @RequestParam("hotelPhotos") MultipartFile[] photos,
+                           BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             log.warn("Hotel creation failed due to validation errors: {}", result.getAllErrors());
             return "hotelmanager/hotels-add";
         }
+
+
         try {
+            List<String> photoUrls = new ArrayList<>();
+            if (photos != null) {
+                for (MultipartFile photo : photos) {
+                    if (!photo.isEmpty()) {
+                        String photoUrl = photoStorageService.savePhoto(photo); // Save the photo and return the URL
+                        photoUrls.add(photoUrl);
+                    }
+                }
+            }
+            hotelRegistrationDTO.setPhotos(photoUrls);
             hotelService.saveHotel(hotelRegistrationDTO);
             redirectAttributes.addFlashAttribute("message", "Hotel (" + hotelRegistrationDTO.getName() + ") added successfully");
             return "redirect:/manager/hotels";
         } catch (HotelAlreadyExistsException e) {
             result.rejectValue("name", "hotel.exists", e.getMessage());
             return "hotelmanager/hotels-add";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

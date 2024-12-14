@@ -14,6 +14,7 @@ import edu.jewel.hotelbookingapp.service.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,6 +29,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class HotelSearchServiceImpl implements HotelSearchService {
+
+    //@Value("${server.base.url}")
+    private final String baseUrl="http://localhost:8081";
 
     private final HotelRepository hotelRepository;
     private final AddressService addressService;
@@ -66,6 +70,11 @@ public class HotelSearchServiceImpl implements HotelSearchService {
     }
 
     @Override
+    public List<HotelAvailabilityDTO> findAll() {
+        return hotelRepository.findAll().stream().map(hotel->mapHotelToHotelAvailabilityDto(hotel, LocalDate.now(), LocalDate.now() )).collect(Collectors.toList());
+    }
+
+    @Override
     public HotelAvailabilityDTO findAvailableHotelById(Long hotelId, LocalDate checkinDate, LocalDate checkoutDate) {
         //validateCheckinAndCheckoutDates(checkinDate, checkoutDate);
 
@@ -89,12 +98,18 @@ public class HotelSearchServiceImpl implements HotelSearchService {
                 .collect(Collectors.toList());
 
         AddressDTO addressDTO = addressService.mapAddressToAddressDto(hotel.getAddress());
-        
+
+        // Map the photos to full URLs by appending the server URL
+        List<String> fullPhotoUrls = hotel.getPhotos().stream()
+                .map(photo -> baseUrl + photo) // Concatenate server URL with photo path
+                .collect(Collectors.toList());
+
         HotelAvailabilityDTO hotelAvailabilityDTO = HotelAvailabilityDTO.builder()
                 .id(hotel.getId())
                 .name(hotel.getName())
                 .addressDTO(addressDTO)
                 .roomDTOs(roomDTOs)
+                .photos(fullPhotoUrls) // Set the full URLs for photos
                 .build();
         
         // For each room type, find the minimum available rooms across the date range

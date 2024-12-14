@@ -37,6 +37,10 @@ public class Hotel {
     private List<Review> reviews = new ArrayList<>();
 
 
+    @ElementCollection
+    @Builder.Default
+    private List<String> photos = new ArrayList<>();
+
     @Override
     public String toString() {
         return "Hotel{" +

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout-main}">
+<head>
+  <title>Recomendations</title>
+
+  <!-- Slick Carousel CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+    .container {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #003057;
+        margin-bottom: 30px;
+    }
+
+    /* Hotel Slider */
+    .hotel-slider {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+        background-color: #fff;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        color: #003057;
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .price-text {
+        color: #FF8C00;
+        font-weight: bold;
+    }
+
+    /* Hotel Image */
+    .hotel-image {
+        object-fit: cover;
+        height: 200px;
+        width: 100%;
+    }
+
+    /* No Hotels Found Alert */
+    .no-hotels-found {
+        background-color: #fbecec;
+        border: 1px solid #ff8c8c;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .col-md-6, .col-md-4, .col-md-2 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+  </style>
+
+  <!-- jQuery (Required for Slick) -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+  <!-- Slick Carousel JS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.hotel-slider').slick({
+        slidesToShow: 1,  // Show one hotel at a time
+        slidesToScroll: 1, // Scroll one hotel at a time
+        autoplay: true, // Enable autoplay
+        autoplaySpeed: 3000, // Set speed of autoplay (in ms)
+        dots: true, // Show navigation dots
+        arrows: false, // Hide the arrows (optional)
+        infinite: true, // Infinite looping
+        speed: 500, // Transition speed (in ms)
+        fade: true, // Fade effect between slides
+        rtl: true // Right to left sliding animation
+      });
+    });
+  </script>
+
+</head>
+<body>
+<th:block layout:fragment="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+
+        <!-- No Hotels Found Message -->
+        <div th:if="${noHotelsFound}" class="alert alert-danger text-center no-hotels-found">
+          <p class="fs-5">No hotels found for the provided criteria.<br>Please try again with different dates or city.</p>
+          <div class="mt-3">
+            <a href="/search" class="btn btn-primary">Go Back to Search</a>
+          </div>
+        </div>
+
+        <!-- Hotel Slider -->
+        <div class="hotel-slider">
+          <div th:each="hotel : ${hotels}">
+            <div class="card">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="/img/maldives-bg.jpg" class="img-fluid hotel-image" alt="Hotel Image">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" th:text="${hotel.name}">Hotel Name</h5>
+                    <div class="row">
+                      <div class="col-6">
+                        <p class="card-text fw-bold">Available Rooms</p>
+                        <div class="row">
+                          <div class="col-6">
+                            <p class="card-text">Single:</p>
+                            <p class="card-text">Double:</p>
+                          </div>
+                          <div class="col-6">
+                            <p class="card-text"><span th:text="${hotel.maxAvailableSingleRooms}">0</span></p>
+                            <p class="card-text"><span th:text="${hotel.maxAvailableDoubleRooms}">0</span></p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <p class="card-text fw-bold">Price per Night</p>
+                        <th:block th:each="room : ${hotel.roomDTOs}">
+                          <p class="price-text" th:if="${room.roomType.name() == 'SINGLE'}">
+                            ৳ <span th:text="${room.pricePerNight}"></span>
+                          </p>
+                          <p class="price-text" th:if="${room.roomType.name() == 'DOUBLE'}">
+                            ৳ <span th:text="${room.pricePerNight}"></span>
+                          </p>
+                        </th:block>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-center justify-content-center">
+                  <a th:href="@{/hotel-details/{id}(id=${hotel.id}, checkinDate=${checkinDate}, checkoutDate=${checkoutDate})}" class="btn btn-primary w-100">Book Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</th:block>
+</body>
+</html>

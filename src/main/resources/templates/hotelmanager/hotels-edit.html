@@ -1,121 +1,180 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout-main}">
+      layout:decorate="~{layout/layout-main}">
 <head>
     <title>Edit My Hotel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Custom form styles for consistent design */
-             .card-header {
-            background-color: #00707e;
-            color: #ffffff;
-            border-radius: 10px 10px 0 0;
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --background-color: #f8f9fa;
+        }
+
+        body {
+            background-color: var(--background-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #002f61, #0056b3);
+            color: white;
+            padding: 1.5rem;
             text-align: center;
-            padding: 20px;
         }
 
-        .btn-primary {
-            background-color: #007bff; /* Match primary theme */
-            border-color: #007bff;
+        .card-body {
+            padding: 2rem;
         }
 
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
         }
 
-        /* Add subtle borders to form inputs */
         .form-control {
             border: 1px solid #ced4da;
-            border-radius: 0.25rem;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
         }
 
         .form-control:focus {
-            border-color: #007bff;
+            border-color: var(--primary-color);
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
         }
 
-        /* Style error messages */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+            transform: translateY(-2px);
+        }
+
         .text-danger {
             font-size: 0.875rem;
+            color: #dc3545;
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                margin: 1rem;
+            }
         }
     </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="card shadow-sm">
-                    <div class="card-header text-center">
-                        <h2>Edit My Hotel</h2>
+    <div class="container-fluid py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0">Edit My Hotel</h2>
                     </div>
                     <div class="card-body">
                         <form method="post" th:action="@{/manager/hotels/edit/{id}(id=${hotel.id})}" th:object="${hotel}">
                             <!-- Hotel Name -->
-                            <div class="form-group mb-3">
+                            <div class="mb-4">
                                 <label class="form-label" for="name">Hotel Name:</label>
                                 <input class="form-control" id="name" type="text" th:field="*{name}"
                                        placeholder="Enter hotel name">
                                 <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                             </div>
-                            <!-- Address -->
+
+                            <!-- Address Details -->
                             <input type="hidden" th:field="*{addressDTO.id}">
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="addressLine">Address Line:</label>
-                                <input class="form-control" id="addressLine" type="text"
-                                       th:field="*{addressDTO.addressLine}" placeholder="Enter address line">
-                                <p class="text-danger" th:if="${#fields.hasErrors('addressDTO.addressLine')}"
-                                   th:errors="*{addressDTO.addressLine}"></p>
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+                                    <label class="form-label" for="addressLine">Address Line:</label>
+                                    <input class="form-control" id="addressLine" type="text"
+                                           th:field="*{addressDTO.addressLine}" placeholder="Enter address line">
+                                    <p class="text-danger" th:if="${#fields.hasErrors('addressDTO.addressLine')}"
+                                       th:errors="*{addressDTO.addressLine}"></p>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label" for="city">City:</label>
+                                    <input class="form-control" id="city" type="text" th:field="*{addressDTO.city}"
+                                           placeholder="Enter city">
+                                    <p class="text-danger" th:if="${#fields.hasErrors('addressDTO.city')}"
+                                       th:errors="*{addressDTO.city}"></p>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label" for="country">Country:</label>
+                                    <input class="form-control" id="country" type="text" th:field="*{addressDTO.country}"
+                                           placeholder="Enter country">
+                                    <p class="text-danger" th:if="${#fields.hasErrors('addressDTO.country')}"
+                                       th:errors="*{addressDTO.country}"></p>
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="city">City:</label>
-                                <input class="form-control" id="city" type="text" th:field="*{addressDTO.city}"
-                                       placeholder="Enter city">
-                                <p class="text-danger" th:if="${#fields.hasErrors('addressDTO.city')}"
-                                   th:errors="*{addressDTO.city}"></p>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="country">Country:</label>
-                                <input class="form-control" id="country" type="text" th:field="*{addressDTO.country}"
-                                       placeholder="Enter country">
-                                <p class="text-danger" th:if="${#fields.hasErrors('addressDTO.country')}"
-                                   th:errors="*{addressDTO.country}"></p>
-                            </div>
-                            <!-- Room Details: Single Room -->
-                            <div class="form-group mb-3">
-                                <input type="hidden" th:field="*{roomDTOs[0].id}">
-                                <label class="form-label" for="singleRoomCount">Single Room Count:</label>
-                                <input class="form-control" id="singleRoomCount" type="number"
-                                       th:field="*{roomDTOs[0].roomCount}" placeholder="Enter count for single rooms">
-                                <p class="text-danger" th:if="${#fields.hasErrors('roomDTOs[0].roomCount')}"
-                                   th:errors="*{roomDTOs[0].roomCount}"></p>
 
-                                <label class="form-label mt-3" for="singleRoomPrice">Single Room Price ($):</label>
-                                <input class="form-control" id="singleRoomPrice" type="number" step="0.01"
-                                       th:field="*{roomDTOs[0].pricePerNight}" placeholder="Enter price for single rooms">
-                                <p class="text-danger" th:if="${#fields.hasErrors('roomDTOs[0].pricePerNight')}"
-                                   th:errors="*{roomDTOs[0].pricePerNight}"></p>
-                            </div>
-                            <!-- Room Details: Double Room -->
-                            <div class="form-group mb-3">
-                                <input type="hidden" th:field="*{roomDTOs[1].id}">
-                                <label class="form-label" for="doubleRoomCount">Double Room Count:</label>
-                                <input class="form-control" id="doubleRoomCount" type="number"
-                                       th:field="*{roomDTOs[1].roomCount}" placeholder="Enter count for double rooms">
-                                <p class="text-danger" th:if="${#fields.hasErrors('roomDTOs[1].roomCount')}"
-                                   th:errors="*{roomDTOs[1].roomCount}"></p>
+                            <!-- Room Details -->
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <h4 class="mb-3">Single Room Details</h4>
+                                    <input type="hidden" th:field="*{roomDTOs[0].id}">
+                                    <label class="form-label" for="singleRoomCount">Room Count:</label>
+                                    <input class="form-control" id="singleRoomCount" type="number"
+                                           th:field="*{roomDTOs[0].roomCount}" placeholder="Enter count">
+                                    <p class="text-danger" th:if="${#fields.hasErrors('roomDTOs[0].roomCount')}"
+                                       th:errors="*{roomDTOs[0].roomCount}"></p>
 
-                                <label class="form-label mt-3" for="doubleRoomPrice">Double Room Price ($):</label>
-                                <input class="form-control" id="doubleRoomPrice" type="number" step="0.01"
-                                       th:field="*{roomDTOs[1].pricePerNight}"
-                                       placeholder="Enter price for double rooms">
-                                <p class="text-danger" th:if="${#fields.hasErrors('roomDTOs[1].pricePerNight')}"
-                                   th:errors="*{roomDTOs[1].pricePerNight}"></p>
+                                    <label class="form-label mt-3" for="singleRoomPrice">Price per Night ($):</label>
+                                    <input class="form-control" id="singleRoomPrice" type="number" step="0.01"
+                                           th:field="*{roomDTOs[0].pricePerNight}" placeholder="Enter price">
+                                    <p class="text-danger" th:if="${#fields.hasErrors('roomDTOs[0].pricePerNight')}"
+                                       th:errors="*{roomDTOs[0].pricePerNight}"></p>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <h4 class="mb-3">Double Room Details</h4>
+                                    <input type="hidden" th:field="*{roomDTOs[1].id}">
+                                    <label class="form-label" for="doubleRoomCount">Room Count:</label>
+                                    <input class="form-control" id="doubleRoomCount" type="number"
+                                           th:field="*{roomDTOs[1].roomCount}" placeholder="Enter count">
+                                    <p class="text-danger" th:if="${#fields.hasErrors('roomDTOs[1].roomCount')}"
+                                       th:errors="*{roomDTOs[1].roomCount}"></p>
+
+                                    <label class="form-label mt-3" for="doubleRoomPrice">Price per Night ($):</label>
+                                    <input class="form-control" id="doubleRoomPrice" type="number" step="0.01"
+                                           th:field="*{roomDTOs[1].pricePerNight}"
+                                           placeholder="Enter price">
+                                    <p class="text-danger" th:if="${#fields.hasErrors('roomDTOs[1].pricePerNight')}"
+                                       th:errors="*{roomDTOs[1].pricePerNight}"></p>
+                                </div>
                             </div>
+
                             <!-- Action Buttons -->
-                            <div class="form-group mb-3 text-center">
-                                <button type="submit" class="btn btn-primary px-4">Update Hotel</button>
-                                <a th:href="@{/manager/hotels}" class="btn btn-secondary px-4">Cancel</a>
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary me-3">Update Hotel</button>
+                                <a th:href="@{/manager/hotels}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>
                     </div>

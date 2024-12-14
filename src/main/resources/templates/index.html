@@ -7,7 +7,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap');
 
         body {
-
             background: linear-gradient(to right, #e0f7fa, #b2dfdb); /* Soft gradient for background */
             background-size: cover;
             background-image: url('/img/maldives-bg.jpg');
@@ -23,6 +22,9 @@
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0; /* Start as invisible */
+            transform: translateX(100%); /* Start off-screen to the right */
+            animation: slideInFadeOut 11s infinite; /* Loop the sliding and fading effect */
         }
 
         h1 {
@@ -82,6 +84,26 @@
 
             p.lead {
                 font-size: 1.2rem;
+            }
+        }
+
+        /* Keyframe animation to slide in from right to left and fade out */
+        @keyframes slideInFadeOut {
+            0% {
+                opacity: 0;
+                transform: translateX(100%); /* Start off-screen to the right */
+            }
+            40% {
+                opacity: 1;
+                transform: translateX(0); /* Slide to the original position */
+            }
+            60% {
+                opacity: 1;
+                transform: translateX(0); /* Stay in position */
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100%); /* Slide off-screen to the left */
             }
         }
     </style>

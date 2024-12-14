@@ -22,4 +22,6 @@ public class HotelAvailabilityDTO {
 
     private Integer maxAvailableDoubleRooms;
 
+    private List<String> photos;
+
 }

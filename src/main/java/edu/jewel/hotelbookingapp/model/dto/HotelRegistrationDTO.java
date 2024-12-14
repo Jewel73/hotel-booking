@@ -27,4 +27,6 @@ public class HotelRegistrationDTO {
     @Valid
     private List<RoomDTO> roomDTOs = new ArrayList<>();
 
+    private List<String> photos = new ArrayList<>();
+
 }

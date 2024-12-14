@@ -1,8 +1,6 @@
 package edu.jewel.hotelbookingapp.initialize;
 
 import edu.jewel.hotelbookingapp.model.*;
-import edu.jewel.hotelbookingapp.repository.*;
-import edu.jewel.hotelbookingapp.model.*;
 import edu.jewel.hotelbookingapp.model.enums.RoleType;
 import edu.jewel.hotelbookingapp.model.enums.RoomType;
 import edu.jewel.hotelbookingapp.repository.*;
@@ -15,7 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -30,139 +30,50 @@ public class TestDataInitializer implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final AddressRepository addressRepository;
     private final HotelRepository hotelRepository;
+    private final RoomRepository roomRepository;
     private final AvailabilityRepository availabilityRepository;
 
     @Override
     @Transactional
     public void run(String... args) {
-
         try {
             log.warn("Checking if test data persistence is required...");
 
             if (roleRepository.count() == 0 && userRepository.count() == 0) {
                 log.info("Initiating test data persistence");
 
+                // Create Roles
                 Role adminRole = new Role(RoleType.ADMIN);
                 Role customerRole = new Role(RoleType.CUSTOMER);
                 Role hotelManagerRole = new Role(RoleType.HOTEL_MANAGER);
 
-                roleRepository.save(adminRole);
-                roleRepository.save(customerRole);
-                roleRepository.save(hotelManagerRole);
+                roleRepository.saveAll(Arrays.asList(adminRole, customerRole, hotelManagerRole));
                 log.info("Role data persisted");
 
-                User user1 = User.builder().username("admin@hotel.com").password(passwordEncoder.encode("1")).name("Admin").lastName("Admin").role(adminRole).build();
-                User user2 = User.builder().username("customer1@hotel.com").password(passwordEncoder.encode("1")).name("Kaya Alp").lastName("Koker").role(customerRole).build();
-                User user3 = User.builder().username("manager1@hotel.com").password(passwordEncoder.encode("1")).name("John").lastName("Doe").role(hotelManagerRole).build();
-                User user4 = User.builder().username("manager2@hotel.com").password(passwordEncoder.encode("1")).name("Max").lastName("Mustermann").role(hotelManagerRole).build();
+                // Create Initial Users
+                List<User> initialUsers = createInitialUsers(adminRole, customerRole, hotelManagerRole);
+                userRepository.saveAll(initialUsers);
 
-                userRepository.save(user1);
-                userRepository.save(user2);
-                userRepository.save(user3);
-                userRepository.save(user4);
+                // Create User-Specific Entities
+                createUserSpecificEntities(initialUsers);
 
-                Admin admin1 = Admin.builder().user(user1).build();
-                Customer c1 = Customer.builder().user(user2).build();
-                HotelManager hm1 = HotelManager.builder().user(user3).build();
-                HotelManager hm2 = HotelManager.builder().user(user4).build();
+                // Create Addresses
+                List<Address> addresses = createAddresses();
+                addressRepository.saveAll(addresses);
 
-                adminRepository.save(admin1);
-                customerRepository.save(c1);
-                hotelManagerRepository.save(hm1);
-                hotelManagerRepository.save(hm2);
-                log.info("User data persisted");
+                // Create Hotels with Managers
+                List<Hotel> hotels = createHotels(addresses);
+                hotelRepository.saveAll(hotels);
 
-                Address addressIst1 = Address.builder().addressLine("Acısu Sokağı No:19, 34357").city("Istanbul")
-                        .country("Turkey").build();
-                Address addressIst2 = Address.builder().addressLine("Çırağan Cd. No:28, 34349 Beşiktaş").city("Istanbul")
-                        .country("Turkey").build();
-                Address addressIst3 = Address.builder().addressLine("Çırağan Cd. No:32, 34349 Beşiktaş").city("Istanbul")
-                        .country("Turkey").build();
+                // Create Rooms for Hotels
+                List<Room> rooms = createRooms(hotels);
+                roomRepository.saveAll(rooms);
 
-                Address addressBerlin1 = Address.builder().addressLine("Unter den Linden 77").city("Berlin")
-                        .country("Germany").build();
-                Address addressBerlin2 = Address.builder().addressLine("Potsdamer Platz 3, Mitte, 10785").city("Berlin")
-                        .country("Germany").build();
-                Address addressBerlin3 = Address.builder().addressLine("Budapester Str. 2, Mitte, 10787").city("Berlin")
-                        .country("Germany").build();
+                // Create Availability
+                List<Availability> availabilities = createAvailability(hotels, rooms);
+                availabilityRepository.saveAll(availabilities);
 
-                addressRepository.save(addressIst1);
-                addressRepository.save(addressIst2);
-                addressRepository.save(addressIst3);
-                addressRepository.save(addressBerlin1);
-                addressRepository.save(addressBerlin2);
-                addressRepository.save(addressBerlin3);
-
-                Hotel hotelIst1 = Hotel.builder().name("Swissotel The Bosphorus Istanbul")
-                        .address(addressIst1).hotelManager(hm1).build();
-
-
-                Hotel hotelIst2 = Hotel.builder().name("Four Seasons Hotel Istanbul")
-                        .address(addressIst2).hotelManager(hm1).build();
-                Hotel hotelIst3 = Hotel.builder().name("Ciragan Palace Kempinski Istanbul")
-                        .address(addressIst3).hotelManager(hm1).build();
-
-                Hotel hotelBerlin1 = Hotel.builder().name("Hotel Adlon Kempinski Berlin")
-                        .address(addressBerlin1).hotelManager(hm2).build();
-                Hotel hotelBerlin2 = Hotel.builder().name("The Ritz-Carlton Berlin")
-                        .address(addressBerlin2).hotelManager(hm2).build();
-                Hotel hotelBerlin3 = Hotel.builder().name("InterContinental Berlin")
-                        .address(addressBerlin3).hotelManager(hm2).build();
-
-                Room singleRoomIst1 = Room.builder().roomType(RoomType.SINGLE)
-                        .pricePerNight(370).roomCount(35).hotel(hotelIst1).build();
-                Room doubleRoomIst1 = Room.builder().roomType(RoomType.DOUBLE)
-                        .pricePerNight(459).roomCount(45).hotel(hotelIst1).build();
-
-                Room singleRoomIst2 = Room.builder().roomType(RoomType.SINGLE)
-                        .pricePerNight(700).roomCount(25).hotel(hotelIst2).build();
-                Room doubleRoomIst2 = Room.builder().roomType(RoomType.DOUBLE)
-                        .pricePerNight(890).roomCount(30).hotel(hotelIst2).build();
-
-                Room singleRoomIst3 = Room.builder().roomType(RoomType.SINGLE)
-                        .pricePerNight(691).roomCount(30).hotel(hotelIst3).build();
-                Room doubleRoomIst3 = Room.builder().roomType(RoomType.DOUBLE)
-                        .pricePerNight(800).roomCount(75).hotel(hotelIst3).build();
-
-                Room singleRoomBerlin1 = Room.builder().roomType(RoomType.SINGLE)
-                        .pricePerNight(120.0).roomCount(25).hotel(hotelBerlin1).build();
-                Room doubleRoomBerlin1 = Room.builder().roomType(RoomType.DOUBLE)
-                        .pricePerNight(250.0).roomCount(15).hotel(hotelBerlin1).build();
-
-                Room singleRoomBerlin2 = Room.builder().roomType(RoomType.SINGLE)
-                        .pricePerNight(300).roomCount(50).hotel(hotelBerlin2).build();
-                Room doubleRoomBerlin2 = Room.builder().roomType(RoomType.DOUBLE)
-                        .pricePerNight(400).roomCount(50).hotel(hotelBerlin2).build();
-
-                Room singleRoomBerlin3 = Room.builder().roomType(RoomType.SINGLE)
-                        .pricePerNight(179).roomCount(45).hotel(hotelBerlin3).build();
-                Room doubleRoomBerlin3 = Room.builder().roomType(RoomType.DOUBLE)
-                        .pricePerNight(256).roomCount(25).hotel(hotelBerlin3).build();
-
-                hotelIst1.getRooms().addAll(Arrays.asList(singleRoomIst1,doubleRoomIst1));
-                hotelIst2.getRooms().addAll(Arrays.asList(singleRoomIst2,doubleRoomIst2));
-                hotelIst3.getRooms().addAll(Arrays.asList(singleRoomIst3,doubleRoomIst3));
-                hotelBerlin1.getRooms().addAll(Arrays.asList(singleRoomBerlin1,doubleRoomBerlin1));
-                hotelBerlin2.getRooms().addAll(Arrays.asList(singleRoomBerlin2,doubleRoomBerlin2));
-                hotelBerlin3.getRooms().addAll(Arrays.asList(singleRoomBerlin3,doubleRoomBerlin3));
-
-                hotelRepository.save(hotelIst1);
-                hotelRepository.save(hotelIst2);
-                hotelRepository.save(hotelIst3);
-                hotelRepository.save(hotelBerlin1);
-                hotelRepository.save(hotelBerlin2);
-                hotelRepository.save(hotelBerlin3);
-                log.info("Hotel data persisted");
-
-                Availability av1Berlin1 = Availability.builder().hotel(hotelBerlin1)
-                        .date(LocalDate.of(2023,9,1)).room(singleRoomBerlin1).availableRooms(5).build();
-                Availability av2Berlin1 = Availability.builder().hotel(hotelBerlin1)
-                        .date(LocalDate.of(2023,9,2)).room(doubleRoomBerlin1).availableRooms(7).build();
-
-                availabilityRepository.save(av1Berlin1);
-                availabilityRepository.save(av2Berlin1);
-                log.info("Availability data persisted");
-
+                log.info("All test data persisted successfully");
             } else {
                 log.info("Test data persistence is not required");
             }
@@ -172,5 +83,107 @@ public class TestDataInitializer implements CommandLineRunner {
         } catch (Exception e) {
             log.error("Unexpected exception occurred: " + e.getMessage());
         }
+    }
+
+    private List<User> createInitialUsers(Role adminRole, Role customerRole, Role hotelManagerRole) {
+        return Arrays.asList(
+                User.builder().username("admin@hotel.com").password(passwordEncoder.encode("1"))
+                        .name("Abdul").lastName("Kader").role(adminRole).build(),
+                User.builder().username("customer1@hotel.com").password(passwordEncoder.encode("1"))
+                        .name("Shafiqul").lastName("Islam").role(customerRole).build(),
+                User.builder().username("manager1@hotel.com").password(passwordEncoder.encode("1"))
+                        .name("Mostafa").lastName("Rahman").role(hotelManagerRole).build(),
+                User.builder().username("manager2@hotel.com").password(passwordEncoder.encode("1"))
+                        .name("Mahmud").lastName("Hossain").role(hotelManagerRole).build(),
+                // Add more initial users for additional managers
+                User.builder().username("manager3@hotel.com").password(passwordEncoder.encode("1"))
+                        .name("Kabir").lastName("Hassan").role(hotelManagerRole).build(),
+                User.builder().username("manager4@hotel.com").password(passwordEncoder.encode("1"))
+                        .name("Amina").lastName("Begum").role(hotelManagerRole).build()
+        );
+    }
+
+    private void createUserSpecificEntities(List<User> users) {
+        List<Admin> admins = new ArrayList<>();
+        List<Customer> customers = new ArrayList<>();
+        List<HotelManager> hotelManagers = new ArrayList<>();
+
+        for (User user : users) {
+            switch (user.getRole().getRoleType()) {
+                case ADMIN:
+                    admins.add(Admin.builder().user(user).build());
+                    break;
+                case CUSTOMER:
+                    customers.add(Customer.builder().user(user).build());
+                    break;
+                case HOTEL_MANAGER:
+                    hotelManagers.add(HotelManager.builder().user(user).build());
+                    break;
+            }
+        }
+
+        adminRepository.saveAll(admins);
+        customerRepository.saveAll(customers);
+        hotelManagerRepository.saveAll(hotelManagers);
+    }
+
+    private List<Address> createAddresses() {
+        return Arrays.asList(
+                Address.builder().addressLine("Gulshan-1, Dhaka").city("Dhaka").country("Bangladesh").build(),
+                Address.builder().addressLine("Banani, Dhaka").city("Dhaka").country("Bangladesh").build(),
+                Address.builder().addressLine("Mirpur-10, Dhaka").city("Dhaka").country("Bangladesh").build(),
+                Address.builder().addressLine("Zindabazar, Sylhet").city("Sylhet").country("Bangladesh").build(),
+                Address.builder().addressLine("Ambarkhana, Sylhet").city("Sylhet").country("Bangladesh").build(),
+                Address.builder().addressLine("Shahporan, Sylhet").city("Sylhet").country("Bangladesh").build(),
+                Address.builder().addressLine("Sea Beach Road, Cox's Bazar").city("Cox's Bazar").country("Bangladesh").build(),
+                // Add more addresses as needed
+                Address.builder().addressLine("Agrabad, Chittagong").city("Chittagong").country("Bangladesh").build()
+        );
+    }
+
+    private List<Hotel> createHotels(List<Address> addresses) {
+        List<HotelManager> managers = hotelManagerRepository.findAll();
+        return Arrays.asList(
+                Hotel.builder().name("Hotel Sarina Dhaka").address(addresses.get(0)).hotelManager(managers.get(0)).build(),
+                Hotel.builder().name("The Westin Dhaka").address(addresses.get(1)).hotelManager(managers.get(1)).build(),
+                Hotel.builder().name("Lakeshore Hotel & Apartments").address(addresses.get(2)).hotelManager(managers.get(2)).build(),
+                Hotel.builder().name("Jewel's Riverside Retreat").address(addresses.get(3)).hotelManager(managers.get(3)).build(),
+                Hotel.builder().name("Rahman Comfort Inn").address(addresses.get(4)).hotelManager(managers.get(3)).build(),
+                Hotel.builder().name("Shahporan Family Stay").address(addresses.get(5)).hotelManager(managers.get(2)).build(),
+                Hotel.builder().name("Seaside Noor Guest House").address(addresses.get(6)).hotelManager(managers.get(0)).build(),
+                Hotel.builder().name("Agrabad Comfort Rooms").address(addresses.get(7)).hotelManager(managers.get(1)).build()
+        );
+    }
+
+    private List<Room> createRooms(List<Hotel> hotels) {
+        List<Room> rooms = new ArrayList<>();
+        for (Hotel hotel : hotels) {
+            rooms.add(Room.builder()
+                    .roomType(RoomType.SINGLE)
+                    .pricePerNight(4000)
+                    .roomCount(5)
+                    .hotel(hotel)
+                    .build());
+            rooms.add(Room.builder()
+                    .roomType(RoomType.DOUBLE)
+                    .pricePerNight(7000)
+                    .roomCount(3)
+                    .hotel(hotel)
+                    .build());
+        }
+        return rooms;
+    }
+
+    private List<Availability> createAvailability(List<Hotel> hotels, List<Room> rooms) {
+        List<Availability> availabilities = new ArrayList<>();
+        for (int i = 0; i < hotels.size(); i++) {
+            availabilities.add(Availability.builder()
+                    .hotel(hotels.get(i))
+                    .room(rooms.get(i * 2))
+                    .date(LocalDate.of(2023, 12, 1 + i))
+                    .availableRooms(3)
+                    .build());
+        }
+        return availabilities;
     }
 }
