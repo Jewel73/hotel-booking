@@ -10,11 +10,7 @@
             --primary-hover: #344d72;
             --accent-color: #ff841d;
             --accent-hover: #d9904b;
-            --background-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-dark: #2d3748;
             --text-light: #ffffff;
-            --border-color: #e1e5eb;
         }
 
         body {
@@ -24,8 +20,8 @@
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            color: var(--text-dark);
             min-height: 100vh;
+            color: var(--text-light);
         }
 
         .hotel-container {
@@ -35,37 +31,38 @@
         }
 
         .details-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             padding: 30px;
             margin-bottom: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.5s ease-out;
         }
 
         .hotel-name {
-            color: var(--primary-color);
+            color: var(--text-light);
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 15px;
         }
 
         .hotel-address {
-            color: var(--text-dark);
+            color: var(--text-light);
             font-size: 1.1rem;
             line-height: 1.5;
             opacity: 0.8;
         }
 
         .dates-card {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             border-radius: 24px;
             padding: 25px;
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .dates-card h4 {
@@ -92,7 +89,7 @@
         }
 
         .table th {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            background: rgba(255, 255, 255, 0.15);
             color: var(--text-light);
             padding: 20px;
             font-weight: 600;
@@ -102,37 +99,44 @@
         }
 
         .table td {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
             padding: 20px;
             border: none;
             margin-bottom: 15px;
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .table tr {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
             border-radius: 12px;
         }
 
         .table tr:hover td {
-            background: rgba(255, 255, 255, 1);
+            background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
 
         .form-select {
-            border: 2px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             padding: 12px;
             width: 100%;
             font-size: 1rem;
+            color: var(--text-light);
             transition: all 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.9);
         }
 
         .form-select:focus {
             border-color: var(--accent-color);
             outline: none;
             box-shadow: 0 0 0 3px rgba(255, 132, 29, 0.2);
+        }
+
+        .form-select option {
+            background: var(--primary-color);
+            color: var(--text-light);
         }
 
         .total-price {
@@ -142,7 +146,7 @@
         }
 
         .reserve-btn {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            background: var(--accent-color);
             color: var(--text-light);
             padding: 15px 40px;
             border: none;
@@ -157,17 +161,17 @@
         }
 
         .reserve-btn:hover:not(:disabled) {
+            background: var(--accent-hover);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(255, 132, 29, 0.3);
         }
 
         .reserve-btn:disabled {
-            background: var(--border-color);
+            background: rgba(255, 255, 255, 0.1);
             cursor: not-allowed;
             transform: none;
         }
 
-        /* Reviews Section */
         .reviews-section {
             margin-top: 40px;
         }
@@ -180,7 +184,7 @@
         }
 
         .review-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 25px;
@@ -188,10 +192,12 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-light);
         }
 
         .review-card:hover {
             transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .stars {
@@ -201,60 +207,73 @@
         }
 
         .stars .empty {
-            color: var(--border-color);
+            color: rgba(255, 255, 255, 0.3);
         }
 
         .review-author {
-            color: var(--primary-color);
+            color: var(--text-light);
             font-weight: 600;
             font-size: 1.1rem;
             margin-left: 15px;
         }
 
         .review-comment {
-            color: var(--text-dark);
+            color: var(--text-light);
             font-size: 1rem;
             line-height: 1.7;
             margin-top: 15px;
+            opacity: 0.9;
         }
 
-        /* Add Review Form */
         .add-review {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 24px;
             padding: 35px;
             margin-top: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .add-review h4 {
-            color: var(--primary-color);
+            color: var(--text-light);
             font-size: 1.5rem;
             margin-bottom: 25px;
             font-weight: 700;
         }
 
         .form-control {
-            border: 2px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             padding: 15px;
             width: 100%;
             margin-bottom: 25px;
             font-size: 1rem;
+            color: var(--text-light);
             transition: all 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.9);
         }
 
         .form-control:focus {
             border-color: var(--accent-color);
             outline: none;
             box-shadow: 0 0 0 3px rgba(255, 132, 29, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-label {
+            color: var(--text-light);
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
         }
 
         .submit-review-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            background: var(--accent-color);
             color: var(--text-light);
             padding: 15px 40px;
             border: none;
@@ -266,7 +285,7 @@
         }
 
         .submit-review-btn:hover {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            background: var(--accent-hover);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(255, 132, 29, 0.3);
         }

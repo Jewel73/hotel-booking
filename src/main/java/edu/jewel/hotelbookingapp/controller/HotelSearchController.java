@@ -130,6 +130,9 @@ public class HotelSearchController {
 
     @GetMapping("/explore")
     public String recomendationPage(Model model, RedirectAttributes redirectAttributes) {
+        if (true)
+            return "hotelsearch/recommendation";
+
         try {
 
             List<HotelAvailabilityDTO> hotels = hotelSearchService.findAll();
