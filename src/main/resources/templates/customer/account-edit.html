@@ -2,134 +2,189 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout-main}">
 <head>
-    <title>Customer Edit Account</title>
+    <title>Edit Account</title>
     <style>
+        :root {
+            --primary-color: rgb(22, 50, 77);
+            --primary-hover: #344d72;
+            --accent-color: #ff841d;
+            --accent-hover: #d9904b;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #ffffff;
+            --border-color: #e1e5eb;
+            --hover-bg: #f1f5f9;
+        }
+
         body {
-            background-color: #f4f7fc;
+            background: var(--background-color);
+            font-family: 'Arial', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
-        .container {
+        .account-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        .card {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            background-color: #00707e;
-            color: #ffffff;
-            border-radius: 10px 10px 0 0;
-            text-align: center;
-            padding: 20px;
-        }
-
-        h2 {
-            margin: 0;
-            font-size: 1.75rem;
-            font-weight: 700;
-        }
-
-        .card-body {
+        .account-header {
+            background: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 16px;
             padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .form-label {
+        .account-header h2 {
+            margin: 0;
+            font-size: 32px;
             font-weight: 600;
-            color: #495057;
+            color: var(--text-light);
         }
 
-        .form-control {
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: #00707e;
-            box-shadow: 0 0 5px rgba(0, 112, 126, 0.2);
-        }
-
-        .btn-primary {
-            background-color: #00707e;
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .btn-primary:hover {
-            background-color: #005f6a;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-
-        .text-danger {
-            font-size: 0.9rem;
-            color: #e3342f;
+        .account-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
         }
 
-        .row {
-            margin-bottom: 15px;
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(22, 50, 77, 0.1);
+            outline: none;
+        }
+
+        .text-danger {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--border-color);
+            color: var(--text-dark);
+            margin-left: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--hover-bg);
+            transform: translateY(-2px);
+        }
+
+        .buttons-container {
+            text-align: center;
+            margin-top: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .account-container {
+                padding: 0 15px;
+            }
+
+            .account-header h2 {
+                font-size: 24px;
+            }
+
+            .account-card {
+                padding: 20px;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 12px;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+            }
         }
     </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>User Account Editing</h2>
-                    </div>
-                    <div class="card-body">
-                        <form method="post" th:action="@{/customer/account/edit}" th:object="${user}">
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="username">Email:</label>
-                                <input class="form-control" id="username" type="email" th:field="*{username}"
-                                       placeholder="Enter email address">
-                                <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="name">First Name:</label>
-                                <input class="form-control" id="name" type="text" th:field="*{name}"
-                                       placeholder="Enter first name">
-                                <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="lastName">Last Name:</label>
-                                <input class="form-control" id="lastName" type="text" th:field="*{lastName}"
-                                       placeholder="Enter last name">
-                                <p class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
-                            </div>
-                            <div class="form-group mb-3 text-center">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a th:href="@{/customer/account}" class="btn btn-secondary">Cancel</a>
-                            </div>
-                        </form>
-                    </div>
+    <div class="account-container">
+        <div class="account-header">
+            <h2>Edit Account</h2>
+        </div>
+
+        <div class="account-card">
+            <form method="post" th:action="@{/customer/account/edit}" th:object="${user}">
+                <div class="form-group">
+                    <label class="form-label" for="username">Email Address</label>
+                    <input class="form-control" id="username" type="email" th:field="*{username}"
+                           placeholder="Enter your email address">
+                    <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
                 </div>
-            </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="name">First Name</label>
+                    <input class="form-control" id="name" type="text" th:field="*{name}"
+                           placeholder="Enter your first name">
+                    <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input class="form-control" id="lastName" type="text" th:field="*{lastName}"
+                           placeholder="Enter your last name">
+                    <p class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                </div>
+
+                <div class="buttons-container">
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                    <a th:href="@{/customer/account}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
         </div>
     </div>
 </th:block>

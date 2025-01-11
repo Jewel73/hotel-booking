@@ -4,86 +4,181 @@
 <head>
     <title>Your Bookings</title>
     <style>
+        :root {
+            --primary-color: rgb(22, 50, 77);
+            --primary-hover: #344d72;
+            --accent-color: #ff841d;
+            --accent-hover: #d9904b;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #ffffff;
+            --border-color: #e1e5eb;
+            --hover-bg: #f1f5f9;
+        }
+
         body {
-            background-color: #f7f7f7;
+            background: var(--background-color);
+            font-family: 'Arial', sans-serif;
+            color: var(--text-dark);
         }
 
-        .container {
+        .bookings-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        h2 {
-            font-size: 1.8rem;
-            color: #16324a;
-            margin-bottom: 20px;
+        .bookings-header {
+            background: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 16px;
+            padding: 30px;
             text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .table-container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        .bookings-header h2 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-light);
         }
 
-        table {
+        .table-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .bookings-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
         }
 
-        table th {
-            background-color: #00707e;
-            color: #ffffff;
-            padding: 12px;
+        .bookings-table th {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 16px;
+            font-weight: 600;
             text-align: left;
-            font-weight: bold;
-            border-top: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        table td {
-            padding: 12px;
-            border-top: 1px solid #dddddd;
-            color: #555555;
+        .bookings-table th:first-child {
+            border-top-left-radius: 12px;
         }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+        .bookings-table th:last-child {
+            border-top-right-radius: 12px;
         }
 
-        tr:hover {
-            background-color: #e0f7fa;
+        .bookings-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-dark);
+            font-size: 15px;
+            vertical-align: middle;
         }
 
-        .btn-primary {
-            background-color: #00707e;
-            color: #ffffff;
-            padding: 6px 12px;
-            border-radius: 5px;
+        .bookings-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .bookings-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .bookings-table tbody tr:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .price-column {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .btn-details {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 8px 16px;
+            border-radius: 8px;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
             border: none;
+            display: inline-block;
         }
 
-        .btn-primary:hover {
-            background-color: #005f6a;
-            color: white;
-        }
-
-        .text-center {
-            text-align: center;
+        .btn-details:hover {
+            background: var(--accent-color);
+            color: var(--text-light);
+            transform: translateY(-2px);
         }
 
         .text-end {
             text-align: right;
         }
 
+        .hotel-name {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .city-name {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .date-column {
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .bookings-container {
+                padding: 0 15px;
+            }
+
+            .bookings-header h2 {
+                font-size: 24px;
+            }
+
+            .table-card {
+                padding: 15px;
+                overflow-x: auto;
+            }
+
+            .bookings-table {
+                min-width: 600px;
+            }
+
+            .btn-details {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
     </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="container">
-        <div class="table-container">
+    <div class="bookings-container">
+        <!-- Header Section -->
+        <div class="bookings-header">
             <h2>Your Bookings</h2>
-            <table class="table table-striped align-middle">
+        </div>
+
+        <!-- Table Card -->
+        <div class="table-card">
+            <table class="bookings-table">
                 <thead>
                 <tr>
                     <th>City</th>
@@ -95,14 +190,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="align-middle" th:each="booking : ${bookings}">
-                    <td th:text="${booking.hotelAddress.city}"></td>
-                    <td th:text="${booking.checkinDate}"></td>
-                    <td th:text="${booking.checkoutDate}"></td>
-                    <td th:text="${booking.hotelName}"></td>
-                    <td th:text="'৳ ' + ${#numbers.formatDecimal(booking.totalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
+                <tr th:each="booking : ${bookings}">
+                    <td class="city-name" th:text="${booking.hotelAddress.city}"></td>
+                    <td class="date-column" th:text="${booking.checkinDate}"></td>
+                    <td class="date-column" th:text="${booking.checkoutDate}"></td>
+                    <td class="hotel-name" th:text="${booking.hotelName}"></td>
+                    <td class="price-column" th:text="'৳ ' + ${#numbers.formatDecimal(booking.totalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
                     <td class="text-end">
-                        <a th:href="@{/customer/bookings/{id}(id=${booking.id})}" class="btn btn-primary btn-sm">Details</a>
+                        <a th:href="@{/customer/bookings/{id}(id=${booking.id})}" class="btn-details">Details</a>
                     </td>
                 </tr>
                 </tbody>

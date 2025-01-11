@@ -1,49 +1,255 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout-main}">
-
-<style>
-
-            body {
-            background-color: #f8f9fa;
-        }
-</style>
 <head>
     <title>Search Hotel</title>
+    <style>
+        :root {
+            --primary-color: rgb(22, 50, 77);
+            --primary-hover: #344d72;
+            --accent-color: #ff841d;
+            --accent-hover: #d9904b;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #ffffff;
+            --border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: linear-gradient(rgba(22, 50, 77, 0.85), rgba(22, 50, 77, 0.85)), url('/img/maldives-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--text-light);
+            padding: 40px 0;
+        }
+
+        .search-container {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .banner-image {
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .search-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-card-header {
+            padding: 35px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .search-card-header h2 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .search-card-body {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .form-label {
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .form-control {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            color: var(--text-light);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(255, 132, 29, 0.2);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-btn {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .alert-danger {
+            background: rgba(253, 232, 232, 0.2);
+            color: #fecaca;
+            border: 1px solid rgba(254, 202, 202, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Date picker customization */
+        .ui-datepicker {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ui-datepicker-header {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .ui-datepicker-calendar th {
+            color: var(--primary-color);
+            padding: 8px;
+        }
+
+        .ui-datepicker-calendar td {
+            padding: 4px;
+        }
+
+        .ui-datepicker-calendar .ui-state-default {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .ui-datepicker-calendar .ui-state-highlight {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+        }
+
+        .ui-datepicker-calendar .ui-state-active {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 0;
+            }
+
+            .banner-image {
+                height: 180px;
+                border-radius: 20px;
+            }
+
+            .search-card {
+                border-radius: 20px;
+            }
+
+            .search-card-header {
+                padding: 25px;
+            }
+
+            .search-card-header h2 {
+                font-size: 24px;
+            }
+
+            .search-card-body {
+                padding: 25px;
+            }
+
+            .search-btn {
+                width: 100%;
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="container">
+    <div class="container search-container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <div class="mb-3">
-                    <img class="img-fluid rounded" src="/img/map-banner.jpg" alt="Map Banner">
-                </div>
+                <img class="banner-image" src="/img/map-banner.jpg" alt="Map Banner">
+
                 <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
-                <div class="card border-0 shadow-lg">
-                    <div class="card-header" style="background-color: rgb(0, 48, 87); color: white;">
-                        <h2 class="text-center">Search for Hotels</h2>
+
+                <div class="search-card">
+                    <div class="search-card-header">
+                        <h2>Find Your Perfect Stay</h2>
                     </div>
-                    <div class="card-body" style="background-color: rgb(245, 245, 245);">
+                    <div class="search-card-body">
                         <form method="post" th:action="@{/search}" th:object="${hotelSearchDTO}">
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="city" style="color: rgb(0, 48, 87); font-weight: bold;">City:</label>
+                            <div class="form-group mb-4">
+                                <label class="form-label" for="city">Where would you like to stay?</label>
                                 <input class="form-control" id="city" type="text" th:field="*{city}"
-                                       placeholder="Enter city" style="border-color: rgb(0, 48, 87);" autofocus>
-                                <p class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+                                       placeholder="Enter city name" autofocus>
+                                <p class="text-danger mt-2" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
                             </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="checkinDate" style="color: rgb(0, 48, 87); font-weight: bold;">Check-in Date:</label>
-                                <input class="form-control" id="checkinDate" type="text" th:field="*{checkinDate}" style="border-color: rgb(0, 48, 87);">
-                                <p class="text-danger" th:if="${#fields.hasErrors('checkinDate')}" th:errors="*{checkinDate}"></p>
+
+                            <div class="form-group mb-4">
+                                <label class="form-label" for="checkinDate">Check-in Date</label>
+                                <input class="form-control" id="checkinDate" type="text" th:field="*{checkinDate}">
+                                <p class="text-danger mt-2" th:if="${#fields.hasErrors('checkinDate')}" th:errors="*{checkinDate}"></p>
                             </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="checkoutDate" style="color: rgb(0, 48, 87); font-weight: bold;">Check-out Date:</label>
-                                <input class="form-control" id="checkoutDate" type="text" th:field="*{checkoutDate}" style="border-color: rgb(0, 48, 87);">
-                                <p class="text-danger" th:if="${#fields.hasErrors('checkoutDate')}" th:errors="*{checkoutDate}"></p>
+
+                            <div class="form-group mb-4">
+                                <label class="form-label" for="checkoutDate">Check-out Date</label>
+                                <input class="form-control" id="checkoutDate" type="text" th:field="*{checkoutDate}">
+                                <p class="text-danger mt-2" th:if="${#fields.hasErrors('checkoutDate')}" th:errors="*{checkoutDate}"></p>
                             </div>
-                            <div class="form-group mb-3 text-center">
-                                <button type="submit" class="btn" style="background-color: rgb(0, 48, 87); color: white; padding-left: 30px; padding-right: 30px;">Search</button>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="search-btn">
+                                    <i class="fas fa-search me-2"></i>Search Hotels
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -53,42 +259,35 @@
     </div>
 </th:block>
 
-
-
-
 <th:block layout:fragment="additional-scripts">
     <script>
         $(document).ready(function () {
             const displayFormat = "dd.mm.yy";
-            const submitFormat = "yy-mm-dd"; // Format that Spring Boot expects for LocalDate
+            const submitFormat = "yy-mm-dd";
 
-            // Block invalid characters for city input
             $("#city").on("input", function () {
                 var value = $(this).val();
                 var filteredValue = value.replace(/[^A-Za-z\s'-]/g, "");
                 $(this).val(filteredValue);
             });
 
-            // Initialize checkinDate
             $("#checkinDate").datepicker({
                 dateFormat: displayFormat,
                 minDate: 0,
                 onClose: function (selectedDate) {
                     if (selectedDate) {
                         var checkoutMinDate = $.datepicker.parseDate(displayFormat, selectedDate);
-                        checkoutMinDate.setDate(checkoutMinDate.getDate() + 1); // Minimum 1 day after check-in
+                        checkoutMinDate.setDate(checkoutMinDate.getDate() + 1);
                         $("#checkoutDate").datepicker("option", "minDate", checkoutMinDate);
                     }
                 }
             }).attr('readonly', 'readonly');
 
-            // Initialize checkoutDate
             $("#checkoutDate").datepicker({
                 dateFormat: displayFormat,
                 minDate: +1
             }).attr('readonly', 'readonly');
 
-            // Reformat dates on form submit
             $("form").on("submit", function () {
                 var checkinDate = $('#checkinDate').datepicker('getDate');
                 var checkoutDate = $('#checkoutDate').datepicker('getDate');
@@ -96,10 +295,7 @@
                 $('#checkoutDate').val($.datepicker.formatDate(submitFormat, checkoutDate));
             });
 
-            // Placeholder
-            $("#checkinDate, #checkoutDate").each(function () {
-                $(this).attr("placeholder", "Select date");
-            });
+            $("#checkinDate, #checkoutDate").attr("placeholder", "Select date");
         });
     </script>
 </th:block>

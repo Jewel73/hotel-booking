@@ -41,16 +41,7 @@ public class Hotel {
     @Builder.Default
     private List<String> photos = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "Hotel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address=" + address +
-                ", rooms=" + rooms +
-                ", hotelManager=" + hotelManager +
-                '}';
-    }
+
 
     @Override
     public boolean equals(Object o) {

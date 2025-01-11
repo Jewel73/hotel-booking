@@ -104,6 +104,11 @@
 
                     <!-- Customer Role -->
                     <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
+                        <a class="nav-link mx-2 rounded" th:href="@{/customer/chat}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
+                            <i class="fas fa-search pe-2"></i>Chat
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_CUSTOMER')">
                         <a class="nav-link mx-2 rounded" th:href="@{/search}" style="color : white; border: 2px solid #b2f2b2; border-radius: 25px; padding: 10px; transition: border-color 0.3s;">
                             <i class="fas fa-search pe-2"></i>Search Hotels
                         </a>

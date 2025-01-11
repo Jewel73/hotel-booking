@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout-main}">
+      layout:decorate="~{layout/layout-main}">
 <head>
-    <title>Manager Dashboard</title>
+    <title>Admin Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -60,10 +60,6 @@
             padding: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
         }
 
         .stat-card:hover {
@@ -230,46 +226,46 @@
     <div class="dashboard-container">
         <!-- Header Section -->
         <div class="dashboard-header">
-            <h2>Manager Dashboard</h2>
-            <p class="mt-2 mb-0">Welcome back! Here's your hotels overview.</p>
+            <h2>Admin Dashboard</h2>
+            <p class="mt-2 mb-0">Welcome back! Here's your platform overview.</p>
         </div>
 
-        <!-- Quick Actions -->
+        <!-- Statistics Cards -->
         <div class="stats-grid">
-            <a th:href="@{/manager/hotels/add}" class="stat-card">
+            <div class="stat-card">
                 <div class="stat-icon stat-primary">
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-users"></i>
                 </div>
-                <div class="stat-title">Add New Hotel</div>
-                <div class="stat-value">Add</div>
-                <div class="stat-change">Quick hotel registration</div>
-            </a>
+                <div class="stat-title">Total Users</div>
+                <div class="stat-value">2,847</div>
+                <div class="stat-change">+12% this month</div>
+            </div>
 
-            <a th:href="@{/manager/hotels}" class="stat-card">
+            <div class="stat-card">
                 <div class="stat-icon stat-success">
                     <i class="fas fa-hotel"></i>
                 </div>
-                <div class="stat-title">My Hotels</div>
-                <div class="stat-value" th:text="${totalHotels ?: '5'}">5</div>
-                <div class="stat-change">Manage your properties</div>
-            </a>
+                <div class="stat-title">Active Hotels</div>
+                <div class="stat-value">156</div>
+                <div class="stat-change">+8% this month</div>
+            </div>
 
-            <a th:href="@{/manager/bookings}" class="stat-card">
+            <div class="stat-card">
                 <div class="stat-icon stat-warning">
                     <i class="fas fa-calendar-check"></i>
                 </div>
-                <div class="stat-title">Active Bookings</div>
-                <div class="stat-value" th:text="${activeBookings ?: '24'}">24</div>
-                <div class="stat-change">Current reservations</div>
-            </a>
+                <div class="stat-title">Bookings</div>
+                <div class="stat-value">1,238</div>
+                <div class="stat-change">+15% this month</div>
+            </div>
 
             <div class="stat-card">
                 <div class="stat-icon stat-danger">
                     <i class="fas fa-dollar-sign"></i>
                 </div>
-                <div class="stat-title">Monthly Revenue</div>
-                <div class="stat-value" th:text="${monthlyRevenue ?: '৳12.5K'}">৳12.5K</div>
-                <div class="stat-change">This month's earnings</div>
+                <div class="stat-title">Revenue</div>
+                <div class="stat-value">$45.2K</div>
+                <div class="stat-change">+20% this month</div>
             </div>
         </div>
 
@@ -292,23 +288,22 @@
 
         <!-- Recent Activity -->
         <div class="recent-activity">
-            <h3 class="chart-title">Recent Bookings</h3>
-            <!-- Demo activity items - will be replaced by th:each when data is available -->
+            <h3 class="chart-title">Recent Activity</h3>
             <div class="activity-item">
                 <div class="activity-icon">
-                    <i class="fas fa-calendar-check"></i>
+                    <i class="fas fa-user-plus"></i>
                 </div>
                 <div class="activity-details">
-                    <div class="activity-title">Seaside Resort - John Smith</div>
+                    <div class="activity-title">New Hotel Manager Registration</div>
                     <div class="activity-time">2 hours ago</div>
                 </div>
             </div>
             <div class="activity-item">
                 <div class="activity-icon">
-                    <i class="fas fa-calendar-check"></i>
+                    <i class="fas fa-hotel"></i>
                 </div>
                 <div class="activity-details">
-                    <div class="activity-title">Mountain View Hotel - Sarah Johnson</div>
+                    <div class="activity-title">New Hotel Listed</div>
                     <div class="activity-time">5 hours ago</div>
                 </div>
             </div>
@@ -317,7 +312,7 @@
                     <i class="fas fa-calendar-check"></i>
                 </div>
                 <div class="activity-details">
-                    <div class="activity-title">City Center Inn - Mike Brown</div>
+                    <div class="activity-title">New Booking Completed</div>
                     <div class="activity-time">8 hours ago</div>
                 </div>
             </div>
@@ -325,88 +320,83 @@
     </div>
 
     <!-- Charts Initialization -->
-    <script>
-        // Demo data for charts
-        const bookingData = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Monthly Bookings',
-                data: [15, 18, 20, 22, 25, 28],
-                borderColor: 'rgb(22, 50, 77)',
-                backgroundColor: 'rgb(22, 50, 77)',
-                tension: 0.4,
-                fill: false,
-                borderWidth: 2,
-                pointBackgroundColor: 'rgb(22, 50, 77)',
-                pointRadius: 4
-            }]
-        };
-
-        const revenueData = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Monthly Revenue (৳)',
-                data: [8000, 9500, 11000, 10500, 12000, 12500],
-                backgroundColor: '#ff841d',
-                borderColor: '#ff841d',
-                borderWidth: 1
-            }]
-        };
-
+    <script th:inline="javascript">
         // Bookings Chart
-        const bookingsChart = new Chart(
-            document.getElementById('bookingsChart').getContext('2d'),
-            {
-                type: 'line',
-                data: bookingData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                maxTicksLimit: 6
-                            }
+        const bookingsCtx = document.getElementById('bookingsChart').getContext('2d');
+        new Chart(bookingsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Monthly Bookings',
+                    data: [165, 178, 190, 186, 200, 220],
+                    borderColor: 'rgb(22, 50, 77)',
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            maxTicksLimit: 6
                         }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            boxWidth: 30,
+                            padding: 10
                         }
                     }
                 }
             }
-        );
+        });
 
         // Revenue Chart
-        const revenueChart = new Chart(
-            document.getElementById('revenueChart').getContext('2d'),
-            {
-                type: 'bar',
-                data: revenueData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                maxTicksLimit: 6,
-                                callback: function(value) {
-                                    return '৳' + value.toLocaleString();
-                                }
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Monthly Revenue ($)',
+                    data: [25000, 32000, 38000, 35000, 42000, 45000],
+                    backgroundColor: '#ff841d'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            maxTicksLimit: 6,
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
                             }
                         }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            boxWidth: 30,
+                            padding: 10
                         }
                     }
                 }
             }
-        );
+        });
     </script>
 </th:block>
 </body>

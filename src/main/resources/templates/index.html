@@ -4,122 +4,221 @@
 <head>
     <title>HotelEase - Your Journey Begins Here</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap');
+        :root {
+            --primary-color: rgb(22, 50, 77);
+            --primary-hover: #344d72;
+            --accent-color: #ff841d;
+            --accent-hover: #d9904b;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #ffffff;
+            --border-color: #e1e5eb;
+            --success-color: #48bb78;
+            --warning-color: #ecc94b;
+            --danger-color: #e53e3e;
+        }
 
         body {
-            background: linear-gradient(to right, #e0f7fa, #b2dfdb); /* Soft gradient for background */
+            font-family: 'Arial', sans-serif;
+            background-image: linear-gradient(rgba(22, 50, 77, 0.85), rgba(22, 50, 77, 0.85)), url('/img/maldives-bg.jpg');
             background-size: cover;
-            background-image: url('/img/maldives-bg.jpg');
             background-position: center;
             background-repeat: no-repeat;
-            font-family: 'Nunito', sans-serif; /* Friendly, modern font */
-            color: #34495e; /* Cool gray for body text */
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--text-light);
         }
 
-        .content {
-            margin-top: 150px;
-            background-color: rgb(0 93 128 / 90%);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.2);
-            opacity: 0; /* Start as invisible */
-            transform: translateX(100%); /* Start off-screen to the right */
-            animation: slideInFadeOut 11s infinite; /* Loop the sliding and fading effect */
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 20px;
+            min-height: calc(100vh - 100px);
+            display: flex;
+            align-items: center;
         }
 
-        h1 {
+        .hero-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 60px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: white; /* Dark slate gray for headings */
-        }
-
-        p.lead {
-            color: white;
-            font-size: 1.4rem;
-            line-height: 1.7;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-primary {
-            background-color: #008080; /* Teal for primary buttons */
-            border-color: #008080;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-            border-radius: 30px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            background: var(--accent-color);
+            color: var(--text-light);
+            margin-right: 15px;
         }
 
         .btn-primary:hover {
-            background-color: #006666; /* Darker teal on hover */
-            transform: scale(1.05);
+            background: var(--accent-hover);
+            transform: translateY(-2px);
         }
 
         .btn-secondary {
-            background-color: #FFC107; /* Golden yellow for accent button */
-            border-color: #FFC107;
-            color: #2c3e50; /* Dark text for contrast */
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            border-radius: 30px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .btn-secondary:hover {
-            background-color: #e0a806;
-            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
         }
 
-        /* Highlighted text with a warm touch */
-        .highlight {
-            color: #FFC107; /* Golden Yellow text for emphasis */
-            font-weight: bold;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
         }
 
-        /* Responsive design for mobile */
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .feature-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
+            .hero-container {
+                padding: 80px 20px;
             }
 
-            p.lead {
+            .hero-content {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
                 font-size: 1.2rem;
             }
-        }
 
-        /* Keyframe animation to slide in from right to left and fade out */
-        @keyframes slideInFadeOut {
-            0% {
-                opacity: 0;
-                transform: translateX(100%); /* Start off-screen to the right */
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
-            40% {
-                opacity: 1;
-                transform: translateX(0); /* Slide to the original position */
-            }
-            60% {
-                opacity: 1;
-                transform: translateX(0); /* Stay in position */
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(-100%); /* Slide off-screen to the left */
+
+            .btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+                display: block;
+                margin: 10px auto;
+                width: 80%;
             }
         }
     </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="content container pt-5">
-        <div class="row justify-content-center align-items-start">
-            <div class="col-12 text-center">
-                <h1 class="display-5 mb-4"><strong>Welcome to <span class="highlight">HotelEase</span></strong></h1>
-                <p class="lead fs-3 mb-5">
-                    Discover the ease of seamless hotel bookings with us.<br>
-                    Your next adventure is just a few clicks away!
-                </p>
-                <a href="/login" class="btn btn-primary btn-lg me-3">Book Now</a>
-                <a href="/explore" class="btn btn-secondary btn-lg">Explore</a>
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to <span class="highlight">HotelEase</span></h1>
+            <p class="hero-subtitle">
+                Discover luxury accommodations and seamless booking experiences.<br>
+                Your perfect stay is just a click away.
+            </p>
+            <a href="/login" class="btn btn-primary">Book Now</a>
+            <a href="/explore" class="btn btn-secondary">Explore Hotels</a>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <h3 class="feature-title">Premium Hotels</h3>
+                    <p class="feature-text">Carefully curated selection of luxury accommodations worldwide</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 class="feature-title">Best Prices</h3>
+                    <p class="feature-text">Guaranteed competitive rates and exclusive deals</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-concierge-bell"></i>
+                    </div>
+                    <h3 class="feature-title">24/7 Support</h3>
+                    <p class="feature-text">Round-the-clock customer service for your peace of mind</p>
+                </div>
             </div>
         </div>
     </div>

@@ -35,16 +35,7 @@ public class Room {
     @Builder.Default
     private List<Availability> availabilities = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", hotel=" + hotel +
-                ", roomType=" + roomType +
-                ", roomCount=" + roomCount +
-                ", pricePerNight=" + pricePerNight +
-                '}';
-    }
+
 
     @Override
     public boolean equals(Object o) {

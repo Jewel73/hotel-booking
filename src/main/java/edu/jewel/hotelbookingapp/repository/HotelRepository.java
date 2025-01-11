@@ -64,4 +64,14 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
                                                          @Param("checkoutDate") LocalDate checkoutDate,
                                                          @Param("numberOfDays") Long numberOfDays);
 
+
+    @Query("SELECT h FROM Hotel h JOIN h.rooms r WHERE h.address.city = :city AND r.pricePerNight >= :price")
+    List<Hotel> findByCityAndPriceGreaterThanEqual(@Param("city") String city, @Param("price") Double price);
+
+    @Query("SELECT h FROM Hotel h JOIN h.rooms r WHERE h.address.city = :city AND r.pricePerNight <= :price")
+    List<Hotel> findByCityAndPriceLessThanEqual(@Param("city") String city, @Param("price") Double price);
+
+    @Query("SELECT h FROM Hotel h JOIN h.rooms r WHERE h.address.city = :city AND r.pricePerNight = :price")
+    List<Hotel> findByCityAndPriceEqual(@Param("city") String city, @Param("price") Double price);
+
 }

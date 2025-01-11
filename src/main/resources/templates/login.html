@@ -6,121 +6,238 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HotelEase - Login</title>
     <style>
-        /* General styles */
+        :root {
+            --primary-color: rgb(22, 50, 77);
+            --primary-hover: #344d72;
+            --accent-color: #ff841d;
+            --accent-hover: #d9904b;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #ffffff;
+            --border-color: rgba(255, 255, 255, 0.2);
+        }
+
         body {
-            background-image: url('/img/maldives-bg.jpg');
+            font-family: 'Arial', sans-serif;
+            background-image: linear-gradient(rgba(22, 50, 77, 0.85), rgba(22, 50, 77, 0.85)), url('/img/maldives-bg.jpg');
             background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            color: white;
+            padding: 20px;
+            color: var(--text-light);
         }
 
         .login-container {
-            background-color: rgb(22, 50, 77);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width:700px;
-
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             width: 100%;
+            max-width: 450px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .login-header {
+            padding: 40px 30px;
             text-align: center;
-            color: white;
         }
 
-        h1 {
-            margin-bottom: 17px;
-            font-family: 'Arial', sans-serif;
-        }
-
-
-
-        .btn-primary {
-            width: 50%;
-            padding: 10px;
-            background-color: #2f489d;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #d9904b;
-        }
-
-        .form-group {
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
             margin-bottom: 15px;
         }
 
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .login-form {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
         .form-control {
-            background-color: #344d72;
-            color: white;
-            border: 1px solid #ccc;
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            color: var(--text-light);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(255, 132, 29, 0.2);
+            outline: none;
         }
 
         .form-control::placeholder {
-            color: #aaa;
+            color: rgba(255, 255, 255, 0.6);
         }
-.form-control:focus {
-    color: var(--bs-body-color);
-    background-color: #d8d8ef;
-    border-color: #86b7fe;
-    outline: 0;
-    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
-}
 
-    .form-control::placeholder {
-            color: #aaa;
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-color);
+            color: var(--text-light);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .form-group label {
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .login-footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-text {
+            color: var(--text-light);
             font-size: 14px;
-            font-weight: bold;
-            color: white;
-            text-align: left;
-            display: block;
-            padding:4px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .login-container {
-                padding: 20px;
-                max-width: 90%;
+        .footer-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-hover);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
+        }
+
+        .alert-danger {
+            background: rgba(253, 232, 232, 0.2);
+            color: #fecaca;
+            border: 1px solid rgba(254, 202, 202, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
         @media (max-width: 480px) {
             .login-container {
-                padding: 15px;
+                border-radius: 20px;
+            }
+
+            .login-header {
+                padding: 30px 20px;
+            }
+
+            .login-form {
+                padding: 30px 20px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .login-footer {
+                padding: 25px 20px;
             }
         }
     </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-<div class="login-container">
-    <h1 class=" mb-4">Welcome to <span style="color:#ff841d" class="highlight">HotelEase</span></h1>
-    <form th:action="@{/login}" method="post">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input class="form-control" type="text" id="username" name="username" placeholder="Enter your username" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input class="form-control" type="password" id="password" name="password" placeholder="Enter your password" required>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo">Welcome to <span class="highlight">HotelEase</span></div>
+            <p>Sign in to continue to your account</p>
         </div>
 
+        <form class="login-form" th:action="@{/login}" method="post">
+            <div th:if="${param.error}" class="alert alert-danger">
+                Invalid username or password
+            </div>
 
-        <button type="submit" class="btn-primary">Login</button>
-    </form>
-</div>
+            <div class="form-group">
+                <label class="form-label" for="username">Email Address</label>
+                <input
+                        class="form-control"
+                        type="email"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your email address"
+                        required
+                        autofocus
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input
+                        class="form-control"
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                >
+            </div>
+
+            <button type="submit" class="btn-primary">Sign In</button>
+        </form>
+
+        <div class="login-footer">
+            <p class="footer-text">
+                Don't have an account?
+                <a th:href="@{/register/manager}" class="footer-link">Register as Hotel Manager</a>
+            </p>
+        </div>
+    </div>
 </th:block>
-
 </body>
 </html>

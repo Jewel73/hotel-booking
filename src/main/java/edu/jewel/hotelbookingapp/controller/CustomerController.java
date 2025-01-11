@@ -27,6 +27,11 @@ public class CustomerController {
     private final UserService userService;
     private final BookingService bookingService;
 
+    @GetMapping("/chat")
+    public String chat(){
+        return "chat";
+    }
+
     @GetMapping("/dashboard")
     public String dashboard() {
         return "customer/dashboard";

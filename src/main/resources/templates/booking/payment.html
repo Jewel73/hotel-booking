@@ -4,16 +4,26 @@
 <head>
     <title>Complete Payment</title>
     <style>
-        /* Style adjustments for better visual appeal */
         body {
             background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
         }
 
         .card {
-            background-color: #00707e;  /* Light gray for card backgrounds */
+            background-color: #ffffff;
             border: none;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #0c3d59;
+            color: #ffffff;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            padding: 15px;
+            font-size: 1.25rem;
+            font-weight: bold;
         }
 
         .card-body {
@@ -21,109 +31,107 @@
         }
 
         h4, strong {
-            color: white; /* Darker text color for better readability */
+            color: #00707e;
         }
 
         .text-primary {
-                    color: #06ad95 !important;
-                font-size:17px;
-            }
+            color: #06ad95 !important;
+            font-size: 17px;
+            font-weight: bold;
+        }
 
         .btn-primary {
             background-color: #ff5f07;
-            border-color: #1e3a5f;
-            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
         }
 
         .btn-primary:hover {
-            background-color: #16324a;
-            border-color: #16324a;
-        }
-
-        /* Adjustments for icons and steps */
-        .bi-check-circle-fill, .bi-check-circle {
-            font-size: 24px;
-            margin-right: 10px;
-        }
-
-        /* Spacing for sections */
-        .row {
-            margin-bottom: 20px;
-        }
-
-        hr {
-            margin: 20px 0;
-            border: 0.5px solid #ddd;
+            background-color: #e04e06;
         }
 
         .form-label {
             font-weight: bold;
-            color: white;
+            color: #00707e;
         }
 
-        p {
-            color: white;
-            margin-top: 0;
-            margin-bottom: 1rem;
-        }
-
-        /* Better alignment and spacing for form */
         .form-control {
-            padding: 10px;
+            border-radius: 8px;
             font-size: 16px;
         }
 
-        /* Better section titles */
-        .section-title {
-            margin-bottom: 15px;
-            font-size: 18px;
-            color: white;
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 16px;
+        }
+
+        .step .icon {
+            font-size: 24px;
+            color: #06ad95;
+            margin-bottom: 8px;
+        }
+
+        .step.active .icon {
+            color: #ff5f07;
+        }
+
+        .step span {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        hr {
+            border: 0.5px solid #ddd;
+            margin: 30px 0;
         }
     </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="container mt-4">
-        <div class="row mb-4">
-            <div class="col-md-6 text-center">
-                <i class="bi bi-check-circle-fill text-primary"></i> <span class="text-primary">Your Selection</span>
+    <div class="container mt-5">
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active">
+                <i class="bi bi-check-circle-fill icon"></i>
+                <span>Your Selection</span>
             </div>
-            <div class="col-md-6 text-center">
-                <i class="bi bi-check-circle text-primary"></i> <span class="text-primary">Complete Details</span>
+            <div class="step">
+                <i class="bi bi-check-circle icon"></i>
+                <span>Complete Details</span>
             </div>
         </div>
 
         <hr>
 
-        <!-- Booking Details -->
         <div class="row">
+            <!-- Hotel Details -->
             <div class="col-md-4">
-                <!-- Hotel Details -->
-                <div class="card mb-3">
+                <div class="card mb-4">
+                    <div class="card-header">Hotel Details</div>
                     <div class="card-body">
                         <p><strong th:text="${hotelDTO.name}">Hotel Name</strong></p>
                         <p th:text="${hotelDTO.addressDTO.getAddressLine()}">Address Line</p>
                         <p th:text="${hotelDTO.addressDTO.city + ', ' + hotelDTO.addressDTO.country}">City, Country</p>
                     </div>
                 </div>
-                <!-- Check-in, Check-out & Duration -->
-                <div class="card mb-3">
-                    <div class="row card-body">
-                        <div class="col">
-                            <p><strong>Check-in</strong></p>
-                            <p th:text="${bookingInitiationDTO.checkinDate}"></p>
-                        </div>
-                        <div class="col">
-                            <p><strong>Check-out</strong></p>
-                            <p th:text="${bookingInitiationDTO.checkoutDate}"></p>
-                        </div>
-                    </div>
+
+                <!-- Stay Details -->
+                <div class="card mb-4">
+                    <div class="card-header">Stay Details</div>
                     <div class="card-body">
-                        <p><strong>Duration of stay:</strong></p>
-                        <p><span th:text="${bookingInitiationDTO.durationDays}">0</span> nights</p>
-                    </div>
-                    <div class="card-body">
-                        <p><strong>Selected rooms:</strong></p>
+                        <p><strong>Check-in:</strong> <span th:text="${bookingInitiationDTO.checkinDate}"></span></p>
+                        <p><strong>Check-out:</strong> <span th:text="${bookingInitiationDTO.checkoutDate}"></span></p>
+                        <p><strong>Duration:</strong> <span th:text="${bookingInitiationDTO.durationDays}"></span> nights</p>
+                        <p><strong>Selected Rooms:</strong></p>
                         <div th:each="roomSelection : ${bookingInitiationDTO.roomSelections}"
                              th:if="${roomSelection.count > 0}">
                             <p th:text="${roomSelection.count + ' x ' + roomSelection.roomType}">0 x Room</p>
@@ -134,29 +142,25 @@
 
             <!-- Price and Payment Form -->
             <div class="col-md-8">
-                <!-- Price Details -->
-                <div class="card mb-3">
+                <div class="card mb-4">
+                    <div class="card-header">Payment Information</div>
                     <div class="card-body">
                         <h4><strong>Total Price:</strong></h4>
                         <h4 th:utext="' ৳ ' + ${#numbers.formatDecimal(bookingInitiationDTO.totalPrice, 0, 'COMMA', 2, 'POINT')}">$0.00</h4>
-                    </div>
-                </div>
 
-                <!-- Payment Form -->
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h4 class="section-title">Payment Information</h4>
                         <form action="/booking/payment" method="post" th:object="${paymentCardDTO}">
                             <div class="form-group mb-3">
                                 <label class="form-label" for="cardholderName">Cardholder Name</label>
                                 <input class="form-control" id="cardholderName" type="text" th:field="*{cardholderName}" required>
                                 <p class="text-danger" th:if="${#fields.hasErrors('cardholderName')}" th:errors="*{cardholderName}"></p>
                             </div>
+
                             <div class="form-group mb-3">
                                 <label class="form-label" for="cardNumber">Card Number</label>
                                 <input class="form-control" id="cardNumber" type="text" th:field="*{cardNumber}" required>
                                 <p class="text-danger" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}"></p>
                             </div>
+
                             <div class="form-group row mb-3">
                                 <div class="col-6">
                                     <label class="form-label" for="expirationDate">Expiration Date</label>
@@ -170,7 +174,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group text-end">
+                            <div class="text-end">
                                 <button type="submit" class="btn btn-primary">Complete Booking</button>
                             </div>
                         </form>
@@ -184,21 +188,21 @@
 <!-- Additional scripts for form validation -->
 <th:block layout:fragment="additional-scripts">
     <script>
-        document.getElementById('cardholderName').addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^a-zA-Z\s]/g, ''); // Allow only letters and spaces
+        document.getElementById('cardholderName').addEventListener('input', function (e) {
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
         });
-        document.getElementById('cardNumber').addEventListener('input', function(e) {
-            this.value = this.value.replace(/\D/g, ''); // Allow only numbers, limit to 16 digits
+        document.getElementById('cardNumber').addEventListener('input', function (e) {
+            this.value = this.value.replace(/\D/g, '');
         });
-        document.getElementById('cvc').addEventListener('input', function(e) {
-            this.value = this.value.replace(/\D/g, '').slice(0, 3); // Allow only numbers, limit to 3 digits
+        document.getElementById('cvc').addEventListener('input', function (e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 3);
         });
-        document.getElementById('expirationDate').addEventListener('input', function(e) {
-            let value = this.value.replace(/\D/g, ''); // Allow only numbers
+        document.getElementById('expirationDate').addEventListener('input', function (e) {
+            let value = this.value.replace(/\D/g, '');
             if (value.length > 2) {
-                value = value.slice(0, 2) + '/' + value.slice(2, 4); // Insert '/' after the first 2 digits
+                value = value.slice(0, 2) + '/' + value.slice(2, 4);
             }
-            this.value = value.slice(0, 5); // Limit to 5 characters, including the '/'
+            this.value = value.slice(0, 5);
         });
     </script>
 </th:block>

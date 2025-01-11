@@ -5,169 +5,329 @@
     <title>Hotel Details</title>
     <th:block th:insert="~{fragment/leaflet :: leaflet-css}"></th:block>
     <style>
+        :root {
+            --primary-color: rgb(22, 50, 77);
+            --primary-hover: #344d72;
+            --accent-color: #ff841d;
+            --accent-hover: #d9904b;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #ffffff;
+            --border-color: #e1e5eb;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: linear-gradient(rgba(22, 50, 77, 0.85), rgba(22, 50, 77, 0.85)), url('/img/maldives-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-dark);
+            min-height: 100vh;
         }
 
-        .container2 {
-            margin: 0px 80px;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .hotel-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        /* Hotel Details Section */
-        .hotel-details-section {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .hotel-details-card {
-            padding: 20px;
-            background-color: #f5f5f5;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        .details-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.5s ease-out;
         }
 
         .hotel-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #00707e;
-            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
         }
 
         .hotel-address {
-            color: #555;
-            font-size: 1rem;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            line-height: 1.5;
+            opacity: 0.8;
         }
 
-        /* Availability Section */
-        .availability-section {
-            margin-top: 20px;
+        .dates-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            color: var(--text-light);
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .availability-card {
-            background-color: #e9f5f9;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #cfe3e8;
+        .dates-card h4 {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
         }
 
-        .availability-card h4 {
-            color: #005960;
-            margin-bottom: 10px;
+        .dates-card p {
+            margin: 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
 
-        /* Table Styling */
         .table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+            margin-top: -15px;
         }
 
         .table th {
-            background-color: #00707e;
-            color: white;
-            padding: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            color: var(--text-light);
+            padding: 20px;
+            font-weight: 600;
             text-align: left;
+            border-radius: 12px;
+            font-size: 1.1rem;
         }
 
         .table td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            color: #555;
-        }
-
-        .table .form-select {
-            width: 100%;
-            padding: 5px;
-        }
-
-        /* Total Price Section */
-        .total-price {
-            margin-top: 20px;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        #reserve-button {
-            background-color: #00707e;
-            color: white;
-            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
             border: none;
-            border-radius: 5px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .table tr {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+        }
+
+        .table tr:hover td {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+        }
+
+        .form-select {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
             width: 100%;
-            cursor: allowed;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.9);
         }
 
-        #reserve-button:disabled {
-            background-color: #ccc;
+        .form-select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 132, 29, 0.2);
         }
 
-        /* Review Section */
-        .review {
-            border-bottom: 1px solid #ddd;
-            padding: 15px 0;
+        .total-price {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 700;
         }
 
-        .review:last-child {
-            border-bottom: none;
+        .reserve-btn {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            color: var(--text-light);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .reserve-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 132, 29, 0.3);
+        }
+
+        .reserve-btn:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            margin-top: 40px;
+        }
+
+        .reviews-section h3 {
+            color: var(--text-light);
+            font-size: 2rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .review-card:hover {
+            transform: translateY(-3px);
         }
 
         .stars {
-            margin-bottom: 10px;
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
         }
 
-        .stars span {
-            font-size: 1.2rem;
-            color: gold;
+        .stars .empty {
+            color: var(--border-color);
         }
 
-        .stars span.empty {
-            color: lightgray;
+        .review-author {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-left: 15px;
         }
 
         .review-comment {
-            color: #555;
+            color: var(--text-dark);
             font-size: 1rem;
+            line-height: 1.7;
+            margin-top: 15px;
+        }
+
+        /* Add Review Form */
+        .add-review {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 35px;
+            margin-top: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .add-review h4 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            width: 100%;
+            margin-bottom: 25px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 132, 29, 0.2);
+        }
+
+        .submit-review-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            color: var(--text-light);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .submit-review-btn:hover {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 132, 29, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hotel-container {
+                padding: 20px 15px;
+            }
+
+            .table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .hotel-name {
+                font-size: 2rem;
+            }
+
+            .dates-card p {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="container2">
-        <!-- Hotel Details Section -->
-        <div class="hotel-details-section">
-            <div class="hotel-details-card">
-                <h3 class="hotel-name" th:text="${hotel.name}">Hotel Name</h3>
-                <p class="hotel-address" th:text="${hotel.addressDTO.addressLine}">Address Line</p>
-                <p class="hotel-address" th:text="${hotel.addressDTO.city + ', ' + hotel.addressDTO.country}">City, Country</p>
-            </div>
+    <div class="hotel-container">
+        <!-- Hotel Details -->
+        <div class="details-card">
+            <h1 class="hotel-name" th:text="${hotel.name}">Hotel Name</h1>
+            <p class="hotel-address" th:text="${hotel.addressDTO.addressLine}">Address Line</p>
+            <p class="hotel-address" th:text="${hotel.addressDTO.city + ', ' + hotel.addressDTO.country}">City, Country</p>
         </div>
 
-        <!-- Availability Section -->
-        <div class="availability-section">
-            <div class="availability-card">
-                <h4>Availability</h4>
-                <p>
-                    <span th:text="${checkinDate}"></span>
-                    <span class="mx-3">→</span>
-                    <span th:text="${checkoutDate}"></span>
-                </p>
-            </div>
+        <!-- Dates Section -->
+        <div class="dates-card">
+            <h4>Your Stay</h4>
+            <p>
+                <span th:text="${checkinDate}"></span>
+                <span class="mx-3">→</span>
+                <span th:text="${checkoutDate}"></span>
+                <span class="ms-3">(<span th:text="${durationDays}"></span> nights)</span>
+            </p>
         </div>
 
-        <!-- Room Selection Table -->
-        <div>
+        <!-- Room Selection -->
+        <div class="details-card">
             <form action="/booking/initiate" method="post" id="booking-form">
-                <table class="table table-bordered">
+                <table class="table">
                     <thead>
                     <tr>
                         <th>Room Type</th>
@@ -191,21 +351,17 @@
                                         th:value="${num}" th:text="${num}"></option>
                             </select>
                         </td>
-
                         <td th:if="${iterStat.index == 0}" rowspan="1">
-                            <div class="total-price" id="totalPrice">$0.00</div>
+                            <div class="total-price" id="totalPrice">৳0.00</div>
                         </td>
-                        <!-- Reserve Button in the second row -->
                         <td th:if="${iterStat.index == 1}" rowspan="1">
-                            <button id="reserve-button" class="btn btn-primary">Reserve</button>
+                            <button id="reserve-button" class="reserve-btn" disabled>Reserve Now</button>
                         </td>
-
-
                     </tr>
                     </tbody>
                 </table>
 
-                <!-- Hidden Inputs for Room Count and Total Price -->
+                <!-- Hidden inputs -->
                 <input type="hidden" id="totalPriceInput" name="totalPrice"/>
                 <input type="hidden" name="hotelId" th:value="${hotel.id}"/>
                 <input type="hidden" name="checkinDate" th:value="${checkinDate}"/>
@@ -216,114 +372,103 @@
         </div>
 
         <!-- Reviews Section -->
-        <div>
-            <h3> Reviews</h3>
+        <div class="reviews-section">
+            <h3>Guest Reviews</h3>
             <div th:if="${#lists.isEmpty(reviews)}">
-                <p>No reviews found.</p>
+                <p>No reviews yet.</p>
             </div>
-            <div th:each="review : ${reviews}" class="review">
+            <div th:each="review : ${reviews}" class="review-card">
                 <div class="stars">
-                    <span th:each="star : ${#numbers.sequence(1, review.rating)}">&#9733;</span> <span th:text="${review.customer.user.name}"></span>
+                    <span th:each="star : ${#numbers.sequence(1, review.rating)}">★</span>
                     <span th:if="${review.rating < 5}" th:each="star : ${#numbers.sequence(1, 5 - review.rating)}"
-                          class="empty">&#9734;</span>
+                          class="empty">★</span>
+                    <span class="review-author" th:text="${review.customer.user.name}"></span>
                 </div>
                 <p class="review-comment" th:text="${review.comment}"></p>
             </div>
         </div>
 
-        <br>
-        <hr/>
-        <div th:if="${canReview}" id="add-review-section" class="add-review">
-            <h4 class="text-warning">Write a Review</h4>
-            <br>
+        <!-- Add Review Section -->
+        <div th:if="${canReview}" class="add-review">
+            <h4>Write a Review</h4>
             <form action="/reviews/add" method="post" id="review-form">
                 <input type="hidden" name="hotelId" th:value="${hotel.id}"/>
                 <input type="hidden" name="customerId" th:value="${customerId}"/>
 
-                <!-- Rating Field -->
-                <div class="form-group mb-3">
-                    <strong for="rating">Rating:</strong>
+                <div class="form-group">
+                    <label for="rating" class="form-label">Rating</label>
                     <select id="rating" name="rating" class="form-select" required>
                         <option value="" selected disabled>Select Rating</option>
-                        <option value="1">&#9733; Poor</option>
-                        <option value="2">&#9733;&#9733; Fair</option>
-                        <option value="3">&#9733;&#9733;&#9733; Good</option>
-                        <option value="4">&#9733;&#9733;&#9733;&#9733; Very Good</option>
-                        <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; Excellent</option>
+                        <option value="1">★ Poor</option>
+                        <option value="2">★★ Fair</option>
+                        <option value="3">★★★ Good</option>
+                        <option value="4">★★★★ Very Good</option>
+                        <option value="5">★★★★★ Excellent</option>
                     </select>
                 </div>
 
-                <!-- Comment Field -->
-                <div class="form-group mb-3">
-                    <strong for="comment">Comment:</strong>
-                    <textarea id="comment" name="comment" rows="4" class="form-control" placeholder="Write your review..." required></textarea>
+                <div class="form-group">
+                    <label for="comment" class="form-label">Your Review</label>
+                    <textarea id="comment" name="comment" class="form-control" rows="4"
+                              placeholder="Share your experience..." required></textarea>
                 </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary">Submit Review</button>
+                <button type="submit" class="submit-review-btn">Submit Review</button>
             </form>
         </div>
-
+    </div>
 </th:block>
+
 <th:block layout:fragment="additional-scripts">
     <th:block th:insert="~{fragment/leaflet :: leaflet-js}"></th:block>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             const roomSelect = $(".room-select");
             const reserveButton = $("#reserve-button");
 
-            // Reset the room selection
             function resetRoomSelection() {
-                roomSelect.each(function () {
+                roomSelect.each(function() {
                     $(this).val(0);
                 });
             }
 
-            // Function to format the price with two decimal places and thousand separators
             function formatPrice(price) {
                 return '৳ ' + price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
 
-            // Calculate the total cost
             function calculateTotal() {
                 let total = 0;
-                roomSelect.each(function () {
+                roomSelect.each(function() {
                     let roomDurationPrice = parseFloat($(this).data("duration-price"));
                     let roomCount = parseInt($(this).val(), 10);
                     total += roomDurationPrice * roomCount;
                 });
 
-                $("#totalPrice").html('<strong>' + formatPrice(total) + '</strong>');
+                $("#totalPrice").html(formatPrice(total));
                 $("#totalPriceInput").val(total.toFixed(2));
 
                 if (total === 0) {
                     reserveButton.prop('disabled', true);
-                    reserveButton.removeClass('btn-primary').addClass('btn-secondary');
                 } else {
                     reserveButton.prop('disabled', false);
-                    reserveButton.removeClass('btn-secondary').addClass('btn-primary');
                 }
             }
 
-            // Reset room selection whenever page is shown
-            $(window).on("pageshow", function () {
+            $(window).on("pageshow", function() {
                 resetRoomSelection();
                 calculateTotal();
             });
 
-            // Update the room count and calculate the total when room selection changes
-            roomSelect.on("change", function () {
+            roomSelect.on("change", function() {
                 let count = $(this).val();
                 $(this).siblings("#roomCountInput").val(count);
                 calculateTotal();
             });
 
-            // Event for clicking the reserve button
-            reserveButton.click(function () {
+            reserveButton.click(function() {
                 $("#booking-form").submit();
             });
 
-            // Initial function calls
             calculateTotal();
         });
     </script>
