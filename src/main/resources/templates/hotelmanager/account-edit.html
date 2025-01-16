@@ -2,133 +2,214 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout-main}">
 <head>
-    <title>Manager Edit Account</title>
+    <title>Edit Account Details</title>
     <style>
-        body {
-            background-color: #f4f7fc;
+        :root {
+            --primary-color: rgb(22, 50, 77);
+            --primary-hover: #344d72;
+            --accent-color: #ff841d;
+            --accent-hover: #d9904b;
+            --text-light: #ffffff;
+            --danger-color: #e3342f;
         }
 
-        .container {
+        .edit-account-layout {
+            padding: 2rem 1rem;
+            min-height: calc(100vh - 200px);
+            background-image: linear-gradient(rgba(22, 50, 77, 0.85), rgba(22, 50, 77, 0.85)), url('/img/maldives-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-light);
         }
 
-        .card {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            background:linear-gradient(135deg, #002f61, #0056b3);
-            color: #ffffff;
-            border-radius: 10px 10px 0 0;
-            text-align: center;
+        .edit-account-container {
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
         }
 
-        h2 {
-            margin: 0;
-            font-size: 1.75rem;
-            font-weight: 700;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            animation: fadeIn 1s ease-out;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .card-body {
-            padding: 30px;
+        .card-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .card-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .form-group {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .form-group:hover {
+            transform: translateY(-5px);
         }
 
         .form-label {
             font-weight: 600;
-            color: #495057;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: block;
         }
 
         .form-control {
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
         }
 
         .form-control:focus {
-            border-color: #00707e;
-            box-shadow: 0 0 5px rgba(0, 112, 126, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 132, 29, 0.2);
         }
 
-        .btn-primary {
-            background-color: #00707e;
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .btn-primary:hover {
-            background-color: #005f6a;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .text-danger {
+            color: var(--danger-color);
             font-size: 0.9rem;
-            color: #e3342f;
+            margin-top: 8px;
+            display: block;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
         }
 
-        .row {
-            margin-bottom: 15px;
+        .btn-primary {
+            background: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .buttons-container {
+            text-align: center;
+            margin-top: 32px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .edit-account-container {
+                padding: 15px;
+            }
+
+            .glass-card {
+                padding: 30px 20px;
+            }
+
+            .card-header h2 {
+                font-size: 2rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 10px 0;
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>User Account Editing</h2>
-                    </div>
-                    <div class="card-body">
-                        <form method="post" th:action="@{/customer/account/edit}" th:object="${user}">
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="username">Email:</label>
-                                <input class="form-control" id="username" type="email" th:field="*{username}"
-                                       placeholder="Enter email address">
-                                <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="name">First Name:</label>
-                                <input class="form-control" id="name" type="text" th:field="*{name}"
-                                       placeholder="Enter first name">
-                                <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="lastName">Last Name:</label>
-                                <input class="form-control" id="lastName" type="text" th:field="*{lastName}"
-                                       placeholder="Enter last name">
-                                <p class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
-                            </div>
-                            <div class="form-group mb-3 text-center">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a th:href="@{/manager/account}" class="btn btn-secondary">Cancel</a>
-                            </div>
-                        </form>
-                    </div>
+    <div class="edit-account-layout">
+        <div class="edit-account-container">
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2>Edit Account Details</h2>
                 </div>
+                <form method="post" th:action="@{/manager/account/edit}" th:object="${user}">
+                    <div class="form-group">
+                        <label class="form-label" for="username">Email</label>
+                        <input class="form-control" id="username" type="email" th:field="*{username}"
+                               placeholder="Enter email address">
+                        <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="name">First Name</label>
+                        <input class="form-control" id="name" type="text" th:field="*{name}"
+                               placeholder="Enter first name">
+                        <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="lastName">Last Name</label>
+                        <input class="form-control" id="lastName" type="text" th:field="*{lastName}"
+                               placeholder="Enter last name">
+                        <p class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                    </div>
+
+                    <div class="buttons-container">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <a th:href="@{/manager/account}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

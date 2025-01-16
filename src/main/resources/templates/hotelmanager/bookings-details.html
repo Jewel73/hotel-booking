@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Details</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         :root {
             --primary-color: rgb(22, 50, 77);
@@ -21,9 +20,14 @@
         }
 
         body {
-            background: var(--background-color);
             font-family: 'Arial', sans-serif;
-            color: var(--text-dark);
+            background-image: linear-gradient(rgba(22, 50, 77, 0.85), rgba(22, 50, 77, 0.85)), url('/img/maldives-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--text-light);
         }
 
         .booking-container {
@@ -32,17 +36,18 @@
             padding: 0 20px;
         }
 
-        .page-header {
-            background: var(--primary-color);
-            color: var(--text-light);
+        .booking-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 30px;
             text-align: center;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .page-header h2 {
+        .booking-header h2 {
             margin: 0;
             font-size: 32px;
             font-weight: 600;
@@ -50,46 +55,51 @@
         }
 
         .details-card {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            padding: 25px;
             margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .section-title {
-            color: var(--primary-color);
+            color: var(--text-light);
             font-size: 20px;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .info-grid {
+        .details-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            margin: 25px 0;
-            padding: 20px;
-            background: var(--background-color);
-            border-radius: 12px;
         }
 
-        .info-item {
-            text-align: center;
+        .details-item {
             padding: 15px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .info-item:hover {
-            transform: translateY(-2px);
+        .details-item h5 {
+            color: var(--text-light);
+            font-size: 14px;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
         }
 
-        .info-item h5 {
-            color: var(--primary-color);
+        .details-item p {
+            color: var(--text-light);
             font-size: 16px;
-            margin-bottom: 8px;
+            margin: 0;
+            font-weight: 500;
         }
 
         .room-list {
@@ -98,37 +108,30 @@
             margin: 0;
         }
 
-        .room-item {
-            background: var(--background-color);
+        .room-list li {
+            background: rgba(255, 255, 255, 0.05);
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-bottom: 10px;
+            font-size: 16px;
+            color: var(--text-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .total-price {
-            font-size: 24px;
+            font-size: 28px;
             color: var(--accent-color);
             font-weight: 700;
         }
 
-        .guest-info {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .guest-info strong {
-            color: var(--primary-color);
-        }
-
-        .divider {
-            height: 1px;
-            background: var(--border-color);
-            margin: 25px 0;
+        .booking-footer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
         }
 
         .btn {
@@ -141,24 +144,14 @@
         }
 
         .btn-primary {
-            background: var(--primary-color);
+            background: var(--accent-color);
             color: var(--text-light);
             border: none;
         }
 
         .btn-primary:hover {
-            background: var(--accent-color);
+            background: var(--accent-hover);
             transform: translateY(-2px);
-        }
-
-        .confirmation-number {
-            font-family: monospace;
-            font-size: 18px;
-            color: var(--accent-color);
-            background: var(--background-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            display: inline-block;
         }
 
         @media (max-width: 768px) {
@@ -166,16 +159,17 @@
                 padding: 0 15px;
             }
 
-            .page-header h2 {
+            .booking-header h2 {
                 font-size: 24px;
             }
 
-            .info-grid {
-                grid-template-columns: 1fr;
+            .booking-footer {
+                flex-direction: column;
             }
 
-            .details-card {
-                padding: 20px;
+            .btn {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -184,75 +178,94 @@
 <th:block layout:fragment="content">
     <div class="booking-container">
         <!-- Header Section -->
-        <div class="page-header">
+        <div class="booking-header">
             <h2>Booking Details</h2>
         </div>
 
+        <!-- Confirmation Number -->
         <div class="details-card">
-            <!-- Confirmation Number -->
-            <div class="text-center mb-4">
-                <h5 class="section-title">Confirmation Number</h5>
-                <span class="confirmation-number" th:text="${bookingDTO.confirmationNumber}"></span>
+            <h3 class="section-title">Confirmation Number</h3>
+            <div class="details-item">
+                <p th:text="${bookingDTO.confirmationNumber}"></p>
             </div>
+        </div>
 
-            <div class="divider"></div>
+        <!-- Hotel Information -->
+        <div class="details-card">
+            <h3 class="section-title">Hotel Information</h3>
+            <div class="details-grid">
+                <div class="details-item">
+                    <h5>Hotel Name</h5>
+                    <p th:text="${bookingDTO.hotelName}"></p>
+                </div>
+                <div class="details-item">
+                    <h5>Address</h5>
+                    <p th:text="${bookingDTO.hotelAddress.addressLine + ', ' + bookingDTO.hotelAddress.city + ', ' + bookingDTO.hotelAddress.country}"></p>
+                </div>
+            </div>
+        </div>
 
-            <!-- Hotel Information -->
-            <h3 th:text="${bookingDTO.hotelName}" class="mb-3"></h3>
-            <p class="text-muted" th:text="${bookingDTO.hotelAddress.addressLine + ', ' + bookingDTO.hotelAddress.city + ', ' + bookingDTO.hotelAddress.country}"></p>
-
-            <!-- Dates Information -->
-            <div class="info-grid">
-                <div class="info-item">
-                    <h5>Check-in</h5>
+        <!-- Stay Information -->
+        <div class="details-card">
+            <h3 class="section-title">Stay Details</h3>
+            <div class="details-grid">
+                <div class="details-item">
+                    <h5>Check-in Date</h5>
                     <p th:text="${bookingDTO.checkinDate}"></p>
                 </div>
-                <div class="info-item">
-                    <h5>Check-out</h5>
+                <div class="details-item">
+                    <h5>Check-out Date</h5>
                     <p th:text="${bookingDTO.checkoutDate}"></p>
                 </div>
-                <div class="info-item">
+                <div class="details-item">
                     <h5>Duration</h5>
                     <p th:text="${days} + ' night(s)'"></p>
                 </div>
             </div>
+        </div>
 
-            <!-- Room Details -->
-            <h5 class="section-title">Room Details</h5>
+        <!-- Room Information -->
+        <div class="details-card">
+            <h3 class="section-title">Room Details</h3>
             <ul class="room-list">
-                <li th:each="room : ${bookingDTO.roomSelections}" class="room-item">
-                    <span th:text="${room.count} + ' x ' + ${room.roomType}"></span>
+                <li th:each="room : ${bookingDTO.roomSelections}">
+                    <span th:text="${room.count} + ' × ' + ${room.roomType}"></span>
                 </li>
             </ul>
+        </div>
 
-            <div class="divider"></div>
-
-            <!-- Payment Information -->
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h5 class="section-title">Total Price</h5>
+        <!-- Payment Information -->
+        <div class="details-card">
+            <h3 class="section-title">Payment Details</h3>
+            <div class="details-grid">
+                <div class="details-item">
+                    <h5>Total Price</h5>
                     <p class="total-price" th:text="'$ ' + ${#numbers.formatDecimal(bookingDTO.totalPrice, 1, 'COMMA', 2, 'POINT')}"></p>
                 </div>
-                <div class="col-md-6">
-                    <h5 class="section-title">Payment Method</h5>
-                    <p class="text-muted" th:text="${bookingDTO.paymentMethod}"></p>
+                <div class="details-item">
+                    <h5>Payment Method</h5>
+                    <p th:text="${bookingDTO.paymentMethod}"></p>
                 </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <!-- Guest Information -->
-            <h5 class="section-title">Guest Details</h5>
-            <div class="guest-info">
-                <strong>Name:</strong>
-                <span th:text="${bookingDTO.customerName}"></span>
-                <strong>Email:</strong>
-                <span th:text="${bookingDTO.customerEmail}"></span>
             </div>
         </div>
 
-        <!-- Back Button -->
-        <div class="text-center">
+        <!-- Guest Information -->
+        <div class="details-card">
+            <h3 class="section-title">Guest Details</h3>
+            <div class="details-grid">
+                <div class="details-item">
+                    <h5>Guest Name</h5>
+                    <p th:text="${bookingDTO.customerName}"></p>
+                </div>
+                <div class="details-item">
+                    <h5>Email</h5>
+                    <p th:text="${bookingDTO.customerEmail}"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="booking-footer">
             <a href="/manager/bookings" class="btn btn-primary">Back to Bookings</a>
         </div>
     </div>

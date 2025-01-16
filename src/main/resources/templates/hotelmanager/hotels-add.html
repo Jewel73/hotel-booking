@@ -10,89 +10,115 @@
             --primary-hover: #344d72;
             --accent-color: #ff841d;
             --accent-hover: #d9904b;
-            --background-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-dark: #2d3748;
             --text-light: #ffffff;
-            --border-color: #e1e5eb;
-            --success-color: #48bb78;
+            --danger-color: #e3342f;
         }
 
-        body {
-            background: var(--background-color);
-            font-family: 'Arial', sans-serif;
-            color: var(--text-dark);
+        .hotel-form-layout {
+            padding: 2rem 1rem;
+            min-height: calc(100vh - 200px);
+            background-image: linear-gradient(rgba(22, 50, 77, 0.85), rgba(22, 50, 77, 0.85)), url('/img/maldives-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-light);
         }
 
         .hotel-form-container {
             max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        .form-header {
-            background: var(--primary-color);
-            color: var(--text-light);
-            border-radius: 16px;
-            padding: 30px;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            animation: fadeIn 1s ease-out;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .card-header {
             text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
         }
 
-        .form-header h2 {
+        .card-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-light);
             margin: 0;
-            font-size: 32px;
-            font-weight: 600;
-        }
-
-        .form-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 30px;
         }
 
         .section-title {
-            color: var(--primary-color);
-            font-size: 24px;
+            color: var(--text-light);
+            font-size: 1.8rem;
             font-weight: 600;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .form-group:hover {
+            transform: translateY(-5px);
         }
 
         .form-label {
             font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 8px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: block;
         }
 
         .form-control {
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
+            width: 100%;
             padding: 12px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text-light);
             transition: all 0.3s ease;
         }
 
         .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(22, 50, 77, 0.15);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 132, 29, 0.2);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .image-upload-container {
-            border: 2px dashed var(--primary-color);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
             border-radius: 16px;
             padding: 30px;
             text-align: center;
-            background-color: var(--background-color);
+            background: rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
 
         .image-upload-container:hover {
             border-color: var(--accent-color);
-            background-color: rgba(22, 50, 77, 0.05);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .image-preview-container {
@@ -107,7 +133,8 @@
             aspect-ratio: 1;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .image-preview img {
@@ -120,8 +147,8 @@
             position: absolute;
             top: 8px;
             right: 8px;
-            background: rgba(255, 59, 48, 0.9);
-            color: white;
+            background: rgba(227, 52, 47, 0.9);
+            color: var(--text-light);
             border: none;
             border-radius: 50%;
             width: 30px;
@@ -134,58 +161,87 @@
         }
 
         .remove-image:hover {
-            background: rgba(255, 59, 48, 1);
+            background: var(--danger-color);
             transform: scale(1.1);
         }
 
         .btn {
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
             font-weight: 600;
-            text-decoration: none;
+            border-radius: 12px;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
         }
 
         .btn-primary {
-            background: var(--primary-color);
+            background: var(--accent-color);
             color: var(--text-light);
-            border: none;
         }
 
         .btn-primary:hover {
-            background: var(--accent-color);
+            background: var(--accent-hover);
             transform: translateY(-2px);
         }
 
         .btn-outline-primary {
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .btn-outline-primary:hover {
-            background: var(--primary-color);
-            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
         .text-danger {
-            color: #ff3b30 !important;
-            font-size: 14px;
-            margin-top: 5px;
+            color: var(--danger-color) !important;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .room-section-title {
+            color: var(--text-light);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
             .hotel-form-container {
-                padding: 0 15px;
+                padding: 15px;
             }
 
-            .form-header h2 {
-                font-size: 24px;
+            .glass-card {
+                padding: 30px 20px;
             }
 
-            .form-card {
-                padding: 20px;
+            .card-header h2 {
+                font-size: 2rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 10px 0;
+                padding: 12px 30px;
+                font-size: 1rem;
             }
 
             .image-preview-container {
@@ -197,120 +253,123 @@
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="hotel-form-container">
-        <!-- Header Section -->
-        <div class="form-header">
-            <h2>Add New Hotel</h2>
+    <div class="hotel-form-layout">
+        <div class="hotel-form-container">
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2>Add New Hotel</h2>
+                </div>
+
+                <form th:action="@{/manager/hotels/add}" th:object="${hotel}" method="post" enctype="multipart/form-data">
+                    <!-- Hotel Information -->
+                    <div class="form-group">
+                        <h3 class="section-title">Hotel Information</h3>
+                        <div class="row">
+                            <div class="col-md-12 mb-4">
+                                <label for="name" class="form-label">Hotel Name</label>
+                                <input type="text" class="form-control" id="name"
+                                       th:field="*{name}"
+                                       placeholder="Enter hotel name" required>
+                                <div th:if="${#fields.hasErrors('name')}"
+                                     class="text-danger" th:errors="*{name}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <label for="addressLine" class="form-label">Address Line</label>
+                                <input type="text" class="form-control" id="addressLine"
+                                       th:field="*{addressDTO.addressLine}"
+                                       placeholder="Enter address" required>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city"
+                                       th:field="*{addressDTO.city}"
+                                       placeholder="Enter city" required>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label for="country" class="form-label">Country</label>
+                                <input type="text" class="form-control" id="country"
+                                       th:field="*{addressDTO.country}"
+                                       placeholder="Enter country" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Details -->
+                    <div class="form-group">
+                        <h3 class="section-title">Room Details</h3>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <h4 class="room-section-title">Single Rooms</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="singleRoomCount" class="form-label">Number of Rooms</label>
+                                        <input type="number" class="form-control" id="singleRoomCount"
+                                               th:field="*{roomDTOs[0].roomCount}"
+                                               placeholder="Room count" required>
+                                        <input type="hidden" th:field="*{roomDTOs[0].roomType}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="singleRoomPrice" class="form-label">Price per Night</label>
+                                        <input type="number" class="form-control" id="singleRoomPrice"
+                                               th:field="*{roomDTOs[0].pricePerNight}"
+                                               step="0.01" placeholder="Price" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <h4 class="room-section-title">Double Rooms</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="doubleRoomCount" class="form-label">Number of Rooms</label>
+                                        <input type="number" class="form-control" id="doubleRoomCount"
+                                               th:field="*{roomDTOs[1].roomCount}"
+                                               placeholder="Room count" required>
+                                        <input type="hidden" th:field="*{roomDTOs[1].roomType}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="doubleRoomPrice" class="form-label">Price per Night</label>
+                                        <input type="number" class="form-control" id="doubleRoomPrice"
+                                               th:field="*{roomDTOs[1].pricePerNight}"
+                                               step="0.01" placeholder="Price" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Photos -->
+                    <div class="form-group">
+                        <h3 class="section-title">Hotel Photos</h3>
+                        <div class="image-upload-container">
+                            <input type="file"
+                                   id="hotelPhotos"
+                                   name="hotelPhotos"
+                                   multiple
+                                   accept="image/*"
+                                   class="form-control d-none">
+                            <label for="hotelPhotos" class="btn btn-outline-primary">
+                                Upload Images
+                            </label>
+                            <p class="mt-2" style="color: rgba(255, 255, 255, 0.7)">Max 5 images, each under 5MB</p>
+                        </div>
+
+                        <div id="imagePreviewContainer" class="image-preview-container">
+                            <!-- Dynamic image previews will be added here -->
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary">Add Hotel</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <form th:action="@{/manager/hotels/add}" th:object="${hotel}" method="post" enctype="multipart/form-data">
-            <!-- Hotel Information -->
-            <div class="form-card">
-                <h3 class="section-title">Hotel Information</h3>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <label for="name" class="form-label">Hotel Name</label>
-                        <input type="text" class="form-control" id="name"
-                               th:field="*{name}"
-                               placeholder="Enter hotel name" required>
-                        <div th:if="${#fields.hasErrors('name')}"
-                             class="text-danger" th:errors="*{name}">
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 mb-4">
-                        <label for="addressLine" class="form-label">Address Line</label>
-                        <input type="text" class="form-control" id="addressLine"
-                               th:field="*{addressDTO.addressLine}"
-                               placeholder="Enter address" required>
-                    </div>
-
-                    <div class="col-md-6 mb-4">
-                        <label for="city" class="form-label">City</label>
-                        <input type="text" class="form-control" id="city"
-                               th:field="*{addressDTO.city}"
-                               placeholder="Enter city" required>
-                    </div>
-
-                    <div class="col-md-6 mb-4">
-                        <label for="country" class="form-label">Country</label>
-                        <input type="text" class="form-control" id="country"
-                               th:field="*{addressDTO.country}"
-                               placeholder="Enter country" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Room Details -->
-            <div class="form-card">
-                <h3 class="section-title">Room Details</h3>
-                <div class="row">
-                    <div class="col-md-6 mb-4">
-                        <h4 class="mb-3">Single Rooms</h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="singleRoomCount" class="form-label">Number of Rooms</label>
-                                <input type="number" class="form-control" id="singleRoomCount"
-                                       th:field="*{roomDTOs[0].roomCount}"
-                                       placeholder="Room count" required>
-                                <input type="hidden" th:field="*{roomDTOs[0].roomType}">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="singleRoomPrice" class="form-label">Price per Night</label>
-                                <input type="number" class="form-control" id="singleRoomPrice"
-                                       th:field="*{roomDTOs[0].pricePerNight}"
-                                       step="0.01" placeholder="Price" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-4">
-                        <h4 class="mb-3">Double Rooms</h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="doubleRoomCount" class="form-label">Number of Rooms</label>
-                                <input type="number" class="form-control" id="doubleRoomCount"
-                                       th:field="*{roomDTOs[1].roomCount}"
-                                       placeholder="Room count" required>
-                                <input type="hidden" th:field="*{roomDTOs[1].roomType}">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="doubleRoomPrice" class="form-label">Price per Night</label>
-                                <input type="number" class="form-control" id="doubleRoomPrice"
-                                       th:field="*{roomDTOs[1].pricePerNight}"
-                                       step="0.01" placeholder="Price" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hotel Photos -->
-            <div class="form-card">
-                <h3 class="section-title">Hotel Photos</h3>
-                <div class="image-upload-container">
-                    <input type="file"
-                           id="hotelPhotos"
-                           name="hotelPhotos"
-                           multiple
-                           accept="image/*"
-                           class="form-control d-none">
-                    <label for="hotelPhotos" class="btn btn-outline-primary">
-                        <i class="bi bi-cloud-upload"></i> Upload Images
-                    </label>
-                    <p class="text-muted mt-2">Max 5 images, each under 5MB</p>
-                </div>
-
-                <div id="imagePreviewContainer" class="image-preview-container">
-                    <!-- Dynamic image previews will be added here -->
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="text-center mt-4 mb-4">
-                <button type="submit" class="btn btn-primary btn-lg px-5">Add Hotel</button>
-            </div>
-        </form>
     </div>
 </th:block>
 
