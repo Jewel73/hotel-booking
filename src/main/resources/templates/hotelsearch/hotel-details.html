@@ -172,89 +172,116 @@
             transform: none;
         }
 
-        .reviews-section {
-            margin-top: 40px;
-        }
+        /* Style for no reviews message */
+.reviews-section p {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgb(255 222 222 / 72%);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    color: #ffc264;
+    text-align: center;
+    font-size: 1.1rem;
+}
 
-        .reviews-section h3 {
-            color: var(--text-light);
-            font-size: 2rem;
-            margin-bottom: 25px;
-            font-weight: 700;
-        }
+/* Update submit review button to match reserve button */
+.submit-review-btn {
+    background: var(--accent-color);
+    color: var(--text-light);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-        .review-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-light);
-        }
+.submit-review-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 132, 29, 0.3);
+}
 
-        .review-card:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.15);
-        }
+.submit-review-btn:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;
+    transform: none;
+}
 
-        .stars {
-            color: var(--accent-color);
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
+/* Ensure consistent form styling */
+.add-review .form-group {
+    margin-bottom: 25px;
+}
 
-        .stars .empty {
-            color: rgba(255, 255, 255, 0.3);
-        }
+.add-review .form-label {
+    margin-bottom: 12px;
+    font-weight: 600;
+}
 
-        .review-author {
-            color: var(--text-light);
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-left: 15px;
-        }
+.add-review .form-select,
+.add-review .form-control {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-light);
+}
 
-        .review-comment {
-            color: var(--text-light);
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-top: 15px;
-            opacity: 0.9;
-        }
+.add-review .form-select:focus,
+.add-review .form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(255, 132, 29, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+}
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+/* Add these styles to your existing style section */
+.dates-form {
+    width: 100%;
+}
 
-        @media (max-width: 768px) {
-            .hotel-container {
-                padding: 20px 15px;
-            }
+.date-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 
-            .table {
-                display: block;
-                overflow-x: auto;
-            }
+.date-input-group label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
 
-            .hotel-name {
-                font-size: 2rem;
-            }
+.dates-form input[type="date"] {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px;
+    color: var(--text-light);
+    font-size: 1rem;
+    width: 200px;
+}
 
-            .dates-card p {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
+.dates-form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.dates-form input[type="date"]:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 132, 29, 0.2);
+}
+
+.update-dates-btn:disabled {
+    background: rgba(255, 255, 255, 0.1) !important;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
     </style>
 </head>
 <body>
@@ -270,12 +297,26 @@
         <!-- Dates Section -->
         <div class="dates-card">
             <h4>Your Stay</h4>
-            <p>
-                <span th:text="${checkinDate}"></span>
-                <span class="mx-3">→</span>
-                <span th:text="${checkoutDate}"></span>
+            <div class="dates-container" style="display: flex; gap: 20px; align-items: center; justify-content: center;">
+                <div class="date-input-group">
+                    <label for="checkin-date">Check-in</label>
+                    <input type="date"
+                           id="checkin-date"
+                           class="form-select"
+                           th:value="${checkinDate}"
+                           required>
+                </div>
+                <span class="mx-3" style="font-size: 1.5rem;">→</span>
+                <div class="date-input-group">
+                    <label for="checkout-date">Check-out</label>
+                    <input type="date"
+                           id="checkout-date"
+                           class="form-select"
+                           th:value="${checkoutDate}"
+                           required>
+                </div>
                 <span class="ms-3">(<span th:text="${durationDays}"></span> nights)</span>
-            </p>
+            </div>
         </div>
 
         <!-- Room Selection -->
@@ -339,6 +380,7 @@
         </div>
 
         <!-- Reviews Section -->
+        <!-- Updated Reviews Section with Add Review Form -->
         <div class="reviews-section">
             <h3>Guest Reviews</h3>
             <div th:if="${#lists.isEmpty(reviews)}">
@@ -352,6 +394,35 @@
                     <span class="review-author" th:text="${review.customer.user.name}"></span>
                 </div>
                 <p class="review-comment" th:text="${review.comment}"></p>
+            </div>
+
+            <!-- Add Review Section -->
+            <div th:if="${canReview}" class="add-review">
+                <h4>Write a Review</h4>
+                <form action="/reviews/add" method="post" id="review-form">
+                    <input type="hidden" name="hotelId" th:value="${hotel.id}"/>
+                    <input type="hidden" name="customerId" th:value="${customerId}"/>
+
+                    <div class="form-group">
+                        <label for="rating" class="form-label">Rating</label>
+                        <select id="rating" name="rating" class="form-select" required>
+                            <option value="" selected disabled>Select Rating</option>
+                            <option value="1">★ Poor</option>
+                            <option value="2">★★ Fair</option>
+                            <option value="3">★★★ Good</option>
+                            <option value="4">★★★★ Very Good</option>
+                            <option value="5">★★★★★ Excellent</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comment" class="form-label">Your Review</label>
+                        <textarea id="comment" name="comment" class="form-control" rows="4"
+                                  placeholder="Share your experience..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-review-btn">Submit Review</button>
+                </form>
             </div>
         </div>
     </div>
@@ -421,6 +492,138 @@
         // Initial calculation
         calculateTotal();
     });
+
+    $(document).ready(function() {
+    const roomSelect = $(".room-select");
+    const reserveButton = $("#reserve-button");
+
+    // Add date input variables
+    const checkinInput = $("#checkin-date");
+    const checkoutInput = $("#checkout-date");
+    const durationDisplay = $("#duration-display");
+
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
+
+    // Set min date for both inputs
+    checkinInput.attr('min', today);
+    checkoutInput.attr('min', today);
+
+    function calculateDuration(checkin, checkout) {
+        const start = new Date(checkin);
+        const end = new Date(checkout);
+        const duration = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+        return duration;
+    }
+
+    function updateDatesAndDuration() {
+        const checkinDate = checkinInput.val();
+        const checkoutDate = checkoutInput.val();
+        const duration = calculateDuration(checkinDate, checkoutDate);
+
+        // Update hidden inputs in the booking form
+        $('input[name="checkinDate"]').val(checkinDate);
+        $('input[name="checkoutDate"]').val(checkoutDate);
+        $('input[name="durationDays"]').val(duration);
+
+        // Update duration display in the dates card
+        $('.dates-card span:contains("nights")').text(`(${duration} nights)`);
+
+        // Recalculate room prices based on new duration
+        updateRoomPrices(duration);
+    }
+
+    function updateRoomPrices(duration) {
+        roomSelect.each(function() {
+            const basePricePerNight = parseFloat($(this).data("duration-price")) / parseInt($('input[name="durationDays"]').val());
+            const newDurationPrice = basePricePerNight * duration;
+            $(this).data("duration-price", newDurationPrice);
+
+            // Update price display in the table
+            const priceCell = $(this).closest('tr').find('td:nth-child(3)');
+            priceCell.html('৳ ' + newDurationPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        });
+
+        // Recalculate total
+        calculateTotal();
+    }
+
+    // Handle check-in date changes
+    checkinInput.change(function() {
+        const checkinDate = new Date($(this).val());
+        const checkoutDate = new Date(checkoutInput.val());
+
+        // Set minimum checkout date to day after checkin
+        const minCheckout = new Date(checkinDate);
+        minCheckout.setDate(minCheckout.getDate() + 1);
+        checkoutInput.attr('min', minCheckout.toISOString().split('T')[0]);
+
+        // If checkout date is before checkin date, update it
+        if (checkoutDate <= checkinDate) {
+            checkoutInput.val(minCheckout.toISOString().split('T')[0]);
+        }
+
+        updateDatesAndDuration();
+    });
+
+    // Handle checkout date changes
+    checkoutInput.change(function() {
+        updateDatesAndDuration();
+    });
+
+    // Existing room selection and total calculation code
+    function resetRoomSelection() {
+        roomSelect.each(function() {
+            $(this).val(0);
+            let index = $(this).data('index');
+            $(`input[name='roomSelections[${index}].count']`).val(0);
+        });
+    }
+
+    function formatPrice(price) {
+        return '৳ ' + price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function calculateTotal() {
+        let total = 0;
+        roomSelect.each(function() {
+            let roomDurationPrice = parseFloat($(this).data("duration-price"));
+            let roomCount = parseInt($(this).val(), 10);
+            total += roomDurationPrice * roomCount;
+        });
+
+        $("#totalPrice").html(formatPrice(total));
+        $("#totalPriceInput").val(total.toFixed(2));
+
+        if (total === 0) {
+            reserveButton.prop('disabled', true);
+        } else {
+            reserveButton.prop('disabled', false);
+        }
+    }
+
+    // Reset on page load
+    $(window).on("pageshow", function() {
+        resetRoomSelection();
+        calculateTotal();
+    });
+
+    // Handle room selection changes
+    roomSelect.on("change", function() {
+        let count = $(this).val();
+        let index = $(this).data('index');
+        $(`input[name='roomSelections[${index}].count']`).val(count);
+        calculateTotal();
+    });
+
+    // Handle form submission
+    reserveButton.click(function() {
+        $("#booking-form").submit();
+    });
+
+    // Initial calculation
+    calculateTotal();
+});
 </script>
 </th:block>
 </body>

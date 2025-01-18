@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
@@ -160,14 +161,14 @@ public class TestDataInitializer implements CommandLineRunner {
         for (Hotel hotel : hotels) {
             rooms.add(Room.builder()
                     .roomType(RoomType.SINGLE)
-                    .pricePerNight(4000)
-                    .roomCount(5)
+                    .pricePerNight(new Random().nextInt(100, 7000))
+                    .roomCount(new Random().nextInt(4))
                     .hotel(hotel)
                     .build());
             rooms.add(Room.builder()
                     .roomType(RoomType.DOUBLE)
-                    .pricePerNight(7000)
-                    .roomCount(3)
+                    .pricePerNight(new Random().nextInt(1200, 10000))
+                    .roomCount(new Random().nextInt(3))
                     .hotel(hotel)
                     .build());
         }
